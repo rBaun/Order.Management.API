@@ -5,6 +5,7 @@ CREATE TABLE Products(
 	ProductDescription VARCHAR(500) NOT NULL,
 	ProductStock INT NOT NULL,
 	ProductPrice DECIMAL NOT NULL,
+	ProductCreatedOn DATE,
 	ProductRestockedOn DATE,
 	ProductImageUrl VARCHAR(500),
 	ProductStatus VARCHAR(25)
