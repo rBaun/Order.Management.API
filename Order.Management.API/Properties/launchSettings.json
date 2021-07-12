@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "OrderManagement.API": {
+      "commandName": "Project",
+      "launchBrowser": true
+    }
+  }
+}
