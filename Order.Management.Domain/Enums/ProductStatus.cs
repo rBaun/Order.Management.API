@@ -2,9 +2,10 @@
 {
     public enum ProductStatus
     {
-        Expired = 0,
+        New = 0,
         InStock = 1,
         OutOfStock = 2,
-        InOrder = 3
+        InOrder = 10,
+        Expired = 99
     }
 }
