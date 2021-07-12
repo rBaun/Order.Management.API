@@ -30,7 +30,7 @@ namespace OrderManagement.API
             services.AddPersistence();
             services.AddPersistenceWrappers(Configuration);
             services.AddServices();
-            services.AddSwagger();
+            services.RegisterSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

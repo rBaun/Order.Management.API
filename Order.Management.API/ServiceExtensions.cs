@@ -8,7 +8,7 @@ namespace OrderManagement.API
 {
     public static class ServiceExtensions
     {
-        public static void AddSwagger(this IServiceCollection services)
+        public static void RegisterSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
@@ -42,9 +42,10 @@ namespace OrderManagement.API
         public static void AddServices(this IServiceCollection services)
         {
             Services.ServiceExtensions.AddBusinessLogic(services);
-            Services.ServiceExtensions.AddCustomerServices(services);
-            Services.ServiceExtensions.AddOrderServices(services);
-            Services.ServiceExtensions.AddProductServices(services);
+            Services.ServiceExtensions.AddEntityServices(services);
+            Services.ServiceExtensions.AddCustomerUseCases(services);
+            Services.ServiceExtensions.AddOrderUseCases(services);
+            Services.ServiceExtensions.AddProductUseCases(services);
         }
     }
 }

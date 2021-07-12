@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using OrderManagement.Application.Services;
 using OrderManagement.Application.UseCases.Customers.DELETE;
 using OrderManagement.Application.UseCases.Customers.GET;
 using OrderManagement.Application.UseCases.Customers.PATCH;
@@ -16,16 +17,19 @@ using OrderManagement.Application.UseCases.Products.POST;
 using OrderManagement.Application.UseCases.Products.PUT;
 using OrderManagement.Services.BusinessLogic;
 using OrderManagement.Services.BusinessLogic.Interfaces;
+using OrderManagement.Services.CustomerUseCases;
 using OrderManagement.Services.CustomerUseCases.DELETE;
 using OrderManagement.Services.CustomerUseCases.GET;
 using OrderManagement.Services.CustomerUseCases.PATCH;
 using OrderManagement.Services.CustomerUseCases.POST;
 using OrderManagement.Services.CustomerUseCases.PUT;
+using OrderManagement.Services.OrderUseCases;
 using OrderManagement.Services.OrderUseCases.DELETE;
 using OrderManagement.Services.OrderUseCases.GET;
 using OrderManagement.Services.OrderUseCases.PATCH;
 using OrderManagement.Services.OrderUseCases.POST;
 using OrderManagement.Services.OrderUseCases.PUT;
+using OrderManagement.Services.ProductUseCases;
 using OrderManagement.Services.ProductUseCases.DELETE;
 using OrderManagement.Services.ProductUseCases.GET;
 using OrderManagement.Services.ProductUseCases.PATCH;
@@ -43,7 +47,14 @@ namespace OrderManagement.Services
             services.AddTransient<IProductLogic, ProductLogic>();
         }
 
-        public static void AddCustomerServices(this IServiceCollection services)
+        public static void AddEntityServices(this IServiceCollection services)
+        {
+            services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IProductService, ProductService>();
+        }
+
+        public static void AddCustomerUseCases(this IServiceCollection services)
         {
             // DELETE
             services.AddTransient<IDeleteCustomerUseCase, DeleteCustomerUseCase>();
@@ -69,7 +80,7 @@ namespace OrderManagement.Services
             services.AddTransient<IUpdateCustomerUseCase, UpdateCustomerUseCase>();
         }
 
-        public static void AddOrderServices(this IServiceCollection services)
+        public static void AddOrderUseCases(this IServiceCollection services)
         {
             // DELETE
             services.AddTransient<IDeleteOrderUseCase, DeleteOrderUseCase>();
@@ -94,7 +105,7 @@ namespace OrderManagement.Services
             services.AddTransient<IUpdateOrderUseCase, UpdateOrderUseCase>();
         }
 
-        public static void AddProductServices(this IServiceCollection services)
+        public static void AddProductUseCases(this IServiceCollection services)
         {
             // DELETE
             services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
