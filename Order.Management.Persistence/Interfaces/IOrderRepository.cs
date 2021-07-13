@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 
 namespace OrderManagement.Persistence.Interfaces
@@ -11,6 +12,6 @@ namespace OrderManagement.Persistence.Interfaces
         List<Order> GetShippedOrders();
         Order UpdateOrderCustomerDetails(Customer customer);
         Order UpdateOrderOrderLines(List<OrderLine> orderLines);
-        Order UpdateOrderStatus(string status);
+        Order UpdateOrderStatus(OrderStatus status);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 
 namespace OrderManagement.Persistence.Interfaces
@@ -11,6 +12,6 @@ namespace OrderManagement.Persistence.Interfaces
         Customer UpdateCustomerAddress(string address);
         Customer UpdateCustomerMail(string mail);
         Customer UpdateCustomerName(string name);
-        Customer UpdateCustomerStatus(string status);
+        Customer UpdateCustomerStatus(CustomerStatus status);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace OrderManagement.Application.UseCases.Customers.PATCH
+﻿namespace OrderManagement.Application.UseCases.Customers.DELETE
 {
     public interface IDeactivateCustomerAccountUseCase
     {

@@ -20,7 +20,7 @@ namespace OrderManagement.API.Controllers.v1
         [HttpPost("create")]
         public IActionResult CreateProduct(Product product)
         {
-            return Ok(product);
+            return Ok(_productService.CreateProduct(product));
         }
     }
 }

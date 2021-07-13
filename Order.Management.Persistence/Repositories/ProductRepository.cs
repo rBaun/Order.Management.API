@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 using OrderManagement.Persistence.Interfaces;
 using OrderManagement.Persistence.Wrappers.Interfaces;
@@ -44,17 +45,17 @@ namespace OrderManagement.Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Product UpdateProductDescription(string description)
+        public Product UpdateProductDescription(int productId, string description)
         {
             throw new System.NotImplementedException();
         }
 
-        public Product UpdateProductName(string name)
+        public Product UpdateProductName(int productId, string name)
         {
             throw new System.NotImplementedException();
         }
 
-        public Product UpdateProductStatus(string status)
+        public Product UpdateProductStatus(int productId, ProductStatus status)
         {
             throw new System.NotImplementedException();
         }

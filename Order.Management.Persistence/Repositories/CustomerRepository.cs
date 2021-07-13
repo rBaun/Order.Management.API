@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 using OrderManagement.Persistence.Interfaces;
 using OrderManagement.Persistence.Wrappers.Interfaces;
@@ -69,7 +70,7 @@ namespace OrderManagement.Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Customer UpdateCustomerStatus(string status)
+        public Customer UpdateCustomerStatus(CustomerStatus status)
         {
             throw new System.NotImplementedException();
         }
