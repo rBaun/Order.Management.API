@@ -7,11 +7,11 @@ namespace OrderManagement.API.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public abstract class BaseApiController<T> : ControllerBase
     {
-        protected readonly ILoggerManager _logger;
+        protected ILoggerManager Logger { get; }
 
         protected BaseApiController(ILoggerManager logger)
         {
-            _logger = logger;
+            Logger = logger;
         }
     }
 }

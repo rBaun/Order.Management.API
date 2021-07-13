@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NLog.Fluent;
 using OrderManagement.Application.Extensions.Interfaces;
 using OrderManagement.Application.Services;
 using OrderManagement.Application.UseCases.Products.POST;
@@ -20,7 +22,27 @@ namespace OrderManagement.API.Controllers.v1
         [HttpPost("create")]
         public IActionResult CreateProduct(Product product)
         {
-            return Ok(_productService.CreateProduct(product));
+            Logger.LogInfo("Validating product details...");
+            if (!string.IsNullOrWhiteSpace(product.Name) || !string.IsNullOrWhiteSpace(product.Brand) ||
+                !string.IsNullOrWhiteSpace(product.Description) || product.Stock < 0 || product.Price < 0)
+            {
+                Logger.LogError($"Product failed validation.");
+                return BadRequest(product);
+            }
+
+            Logger.LogInfo("Starting to create product...");
+            var createdProduct = _productService.CreateProduct(product);
+
+            if (createdProduct.ProductId > 0)
+            {
+                Logger.LogInfo("Product was created successfully!");
+            }
+            else
+            {
+                Logger.LogError("Product was not created. The returned ID was NOT above 0.");
+            }
+
+            return Ok(createdProduct);
         }
     }
 }
