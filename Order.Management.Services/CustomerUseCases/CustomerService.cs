@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OrderManagement.Application.Services;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
+using OrderManagement.Domain.Wrappers.Pagination;
 
 namespace OrderManagement.Services.CustomerUseCases
 {
@@ -16,7 +17,7 @@ namespace OrderManagement.Services.CustomerUseCases
             throw new NotImplementedException();
         }
 
-        public List<Customer> GetAllCustomers()
+        public List<Customer> GetAllCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }
@@ -26,17 +27,17 @@ namespace OrderManagement.Services.CustomerUseCases
             throw new NotImplementedException();
         }
 
-        public List<Customer> GetFirstTimeCustomers()
+        public List<Customer> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }
 
-        public List<Customer> GetLoyalCustomers()
+        public List<Customer> GetLoyalCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }
 
-        public List<Customer> GetNoAccountCustomers()
+        public List<Customer> GetNoAccountCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }

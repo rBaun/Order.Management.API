@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
+using OrderManagement.Domain.Wrappers.Pagination;
 
 namespace OrderManagement.Application.Services
 {
     public interface ICustomerService
     {
         Customer CreateCustomer(Customer customer);
-        List<Customer> GetAllCustomers();
+        List<Customer> GetAllCustomers(PaginationFilter paginationFilter, string route);
         Customer GetCustomerById(int customerId);
-        List<Customer> GetFirstTimeCustomers();
-        List<Customer> GetLoyalCustomers();
-        List<Customer> GetNoAccountCustomers();
+        List<Customer> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route);
+        List<Customer> GetLoyalCustomers(PaginationFilter paginationFilter, string route);
+        List<Customer> GetNoAccountCustomers(PaginationFilter paginationFilter, string route);
         Customer UpdateCustomerAddressOn(int customerId, string address);
         Customer UpdateCustomerMailOn(int customerId, string mail);
         Customer UpdateCustomerNameOn(int customerId, string name);
