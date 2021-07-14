@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLog.Fluent;
 using OrderManagement.Application.Extensions.Interfaces;
 using OrderManagement.Application.Services;
 using OrderManagement.Application.UseCases.Products.POST;
 using OrderManagement.Domain.Models;
+using OrderManagement.Domain.Wrappers.Common;
 
 namespace OrderManagement.API.Controllers.v1
 {
@@ -19,30 +21,29 @@ namespace OrderManagement.API.Controllers.v1
             _productService = productService;
         }
 
-        [HttpPost("create")]
-        public IActionResult CreateProduct(Product product)
+        // POST: api/v1/products/add
+        [HttpPost("add")]
+        public IActionResult CreateProduct([FromQuery] Product product)
         {
             Logger.LogInfo("Validating product details...");
-            if (!string.IsNullOrWhiteSpace(product.Name) || !string.IsNullOrWhiteSpace(product.Brand) ||
-                !string.IsNullOrWhiteSpace(product.Description) || product.Stock < 0 || product.Price < 0)
+            if (string.IsNullOrWhiteSpace(product.Name) || string.IsNullOrWhiteSpace(product.Brand) ||
+                string.IsNullOrWhiteSpace(product.Description) || product.Stock < 0 || product.Price < 0)
             {
-                Logger.LogError($"Product failed validation.");
-                return BadRequest(product);
+                Logger.LogError($"Product invalid.");
+                return BadRequest("Product invalid");
             }
 
-            Logger.LogInfo("Starting to create product...");
+            Logger.LogInfo("Attempting to create product...");
             var createdProduct = _productService.CreateProduct(product);
 
-            if (createdProduct.ProductId > 0)
+            if (createdProduct?.ProductId < 1)
             {
-                Logger.LogInfo("Product was created successfully!");
+                Logger.LogError("Product not created.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Product not created");
             }
-            else
-            {
-                Logger.LogError("Product was not created. The returned ID was NOT above 0.");
-            }
+            Logger.LogInfo("Product created successfully!");
 
-            return Ok(createdProduct);
+            return Created($"api/v1/products/{createdProduct?.ProductId}", new Response<Product>(createdProduct));
         }
     }
 }
