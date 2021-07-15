@@ -12,67 +12,67 @@ namespace OrderManagement.Services.CustomerUseCases
 {
     public class CustomerService : ICustomerService
     {
-        public Customer CreateCustomer(Customer customer)
+        public Task<Customer> CreateCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }
 
-        public List<Customer> GetAllCustomers(PaginationFilter paginationFilter, string route)
+        public Task<List<Customer>> GetAllCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }
 
-        public Customer GetCustomerById(int customerId)
+        public Task<Customer> GetCustomerById(int customerId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Customer> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route)
+        public Task<List<Customer>> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }
 
-        public List<Customer> GetLoyalCustomers(PaginationFilter paginationFilter, string route)
+        public Task<List<Customer>> GetLoyalCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }
 
-        public List<Customer> GetNoAccountCustomers(PaginationFilter paginationFilter, string route)
+        public Task<List<Customer>> GetNoAccountCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }
 
-        public Customer UpdateCustomerAddressOn(int customerId, string address)
+        public Task<Customer> UpdateCustomerAddressOn(int customerId, string address)
         {
             throw new NotImplementedException();
         }
 
-        public Customer UpdateCustomerMailOn(int customerId, string mail)
+        public Task<Customer> UpdateCustomerMailOn(int customerId, string mail)
         {
             throw new NotImplementedException();
         }
 
-        public Customer UpdateCustomerNameOn(int customerId, string name)
+        public Task<Customer> UpdateCustomerNameOn(int customerId, string name)
         {
             throw new NotImplementedException();
         }
 
-        public Customer UpdateCustomerStatusOn(int customerId, CustomerStatus status)
+        public Task<Customer> UpdateCustomerStatusOn(int customerId, CustomerStatus status)
         {
             throw new NotImplementedException();
         }
 
-        public Customer UpdateCustomer(Customer customer)
+        public Task<Customer> UpdateCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }
 
-        public int DeactivateCustomerOn(int customerId)
+        public Task<int> DeactivateCustomerOn(int customerId)
         {
             throw new NotImplementedException();
         }
 
-        public int DeleteCustomer(int customerId)
+        public Task<int> DeleteCustomer(int customerId)
         {
             throw new NotImplementedException();
         }

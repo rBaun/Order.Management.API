@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrderManagement.Application.Extensions.Interfaces;
 using OrderManagement.Application.Services;
@@ -23,14 +24,14 @@ namespace OrderManagement.API.Controllers.v1
 
         // POST: api/v1/customers/add
         [HttpPost("add")]
-        public IActionResult CreateCustomer([FromQuery] Customer customer)
+        public async Task<IActionResult> CreateCustomer([FromQuery] Customer customer)
         {
             Logger.LogInfo("Attempting to create customer...");
 
             if (customer == null)
                 return BadRequest();
 
-            var createdCustomer = _customerService.CreateCustomer(customer);
+            var createdCustomer = await _customerService.CreateCustomer(customer);
 
             if (createdCustomer?.CustomerId < 1)
             {
@@ -49,7 +50,7 @@ namespace OrderManagement.API.Controllers.v1
 
         // GET: api/v1/customers/{customerId}
         [HttpGet("{customerId:int}")]
-        public IActionResult GetCustomerById([FromRoute] int customerId)
+        public async Task<IActionResult> GetCustomerById([FromRoute] int customerId)
         {
             Logger.LogInfo("Validating customer id...");
             if (customerId < 1)
@@ -59,7 +60,7 @@ namespace OrderManagement.API.Controllers.v1
             }
 
             Logger.LogInfo("Attempting to fetch customer record...");
-            var customer = _customerService.GetCustomerById(customerId);
+            var customer = await _customerService.GetCustomerById(customerId);
 
             if (customer.CustomerId != customerId)
             {
@@ -74,10 +75,10 @@ namespace OrderManagement.API.Controllers.v1
 
         // GET: api/v1/customers
         [HttpGet]
-        public IActionResult GetAllCustomers(PaginationFilter paginationFilter)
+        public async Task<IActionResult> GetAllCustomers(PaginationFilter paginationFilter)
         {
             Logger.LogInfo("Fetching all customers...");
-            var customers = _customerService.GetAllCustomers(paginationFilter, Request.Path.Value);
+            var customers = await _customerService.GetAllCustomers(paginationFilter, Request.Path.Value);
             Logger.LogInfo("Customers found!");
 
             return Ok(customers);
@@ -85,10 +86,10 @@ namespace OrderManagement.API.Controllers.v1
 
         // GET: api/v1/customers/firstTimers
         [HttpGet("firstTimers")]
-        public IActionResult GetAllFirstTimeCustomers(PaginationFilter paginationFilter)
+        public async Task<IActionResult> GetAllFirstTimeCustomers(PaginationFilter paginationFilter)
         {
             Logger.LogInfo("Fetching all first-time customers...");
-            var customers = _customerService.GetFirstTimeCustomers(paginationFilter, Request.Path.Value);
+            var customers = await _customerService.GetFirstTimeCustomers(paginationFilter, Request.Path.Value);
             Logger.LogInfo("Customers found!");
 
             return Ok(customers);
@@ -96,10 +97,10 @@ namespace OrderManagement.API.Controllers.v1
 
         // GET: api/v1/customers/loyal
         [HttpGet("loyal")]
-        public IActionResult GetAllLoyalCustomers(PaginationFilter paginationFilter)
+        public async Task<IActionResult> GetAllLoyalCustomers(PaginationFilter paginationFilter)
         {
             Logger.LogInfo("Fetching all loyal customers...");
-            var customers = _customerService.GetLoyalCustomers(paginationFilter, Request.Path.Value);
+            var customers = await _customerService.GetLoyalCustomers(paginationFilter, Request.Path.Value);
             Logger.LogInfo("Customers found!");
 
             return Ok(customers);
@@ -107,10 +108,10 @@ namespace OrderManagement.API.Controllers.v1
 
         // GET: api/v1/customers/noAccount
         [HttpGet("noAccount")]
-        public IActionResult GetAllNoAccountCustomers(PaginationFilter paginationFilter)
+        public async Task<IActionResult> GetAllNoAccountCustomers(PaginationFilter paginationFilter)
         {
             Logger.LogInfo("Fetching all customers without accounts...");
-            var customers = _customerService.GetNoAccountCustomers(paginationFilter, Request.Path.Value);
+            var customers = await _customerService.GetNoAccountCustomers(paginationFilter, Request.Path.Value);
             Logger.LogInfo("Customers found!");
 
             return Ok(customers);
@@ -122,7 +123,7 @@ namespace OrderManagement.API.Controllers.v1
 
         // PUT: api/v1/customers
         [HttpPut]
-        public IActionResult UpdateCustomer([FromQuery] Customer customer)
+        public async Task<IActionResult> UpdateCustomer([FromQuery] Customer customer)
         {
             Logger.LogInfo("Attempting to update customer...");
 
@@ -132,7 +133,7 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(customer);
             }
 
-            var updatedCustomer = _customerService.UpdateCustomer(customer);
+            var updatedCustomer = await _customerService.UpdateCustomer(customer);
 
             if (updatedCustomer != customer)
             {
@@ -150,7 +151,7 @@ namespace OrderManagement.API.Controllers.v1
 
         // PATCH: api/v1/customers/update/address
         [HttpPatch("update/address")]
-        public IActionResult PatchCustomerAddress(int customerId, string address)
+        public async Task<IActionResult> PatchCustomerAddress(int customerId, string address)
         {
             Logger.LogInfo("Attempting to update customer address...");
 
@@ -166,7 +167,7 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(address);
             }
 
-            var updatedCustomer = _customerService.UpdateCustomerAddressOn(customerId, address);
+            var updatedCustomer = await _customerService.UpdateCustomerAddressOn(customerId, address);
 
             if (updatedCustomer.Address != address)
             {
@@ -180,7 +181,7 @@ namespace OrderManagement.API.Controllers.v1
 
         // PATCH: api/v1/customers/update/mail
         [HttpPatch("update/mail")]
-        public IActionResult PatchCustomerMail(int customerId, string mail)
+        public async Task<IActionResult> PatchCustomerMail(int customerId, string mail)
         {
             Logger.LogInfo("Attempting to update customer e-mail...");
 
@@ -196,7 +197,7 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(mail);
             }
 
-            var updatedCustomer = _customerService.UpdateCustomerMailOn(customerId, mail);
+            var updatedCustomer = await _customerService.UpdateCustomerMailOn(customerId, mail);
 
             if (updatedCustomer.Mail != mail)
             {
@@ -210,7 +211,7 @@ namespace OrderManagement.API.Controllers.v1
 
         // PATCH: api/v1/customers/update/name
         [HttpPatch("update/name")]
-        public IActionResult PatchCustomerName(int customerId, string name)
+        public async Task<IActionResult> PatchCustomerName(int customerId, string name)
         {
             Logger.LogInfo("Attempting to update customer name...");
 
@@ -226,7 +227,7 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(name);
             }
 
-            var updatedCustomer = _customerService.UpdateCustomerNameOn(customerId, name);
+            var updatedCustomer = await _customerService.UpdateCustomerNameOn(customerId, name);
 
             if (updatedCustomer.Mail != name)
             {
@@ -240,7 +241,7 @@ namespace OrderManagement.API.Controllers.v1
 
         // PATCH: api/v1/customers/update/status
         [HttpPatch("update/status")]
-        public IActionResult PatchCustomerStatus(int customerId, CustomerStatus customerStatus)
+        public async Task<IActionResult> PatchCustomerStatus(int customerId, CustomerStatus customerStatus)
         {
             Logger.LogInfo("Attempting to update customer status...");
 
@@ -250,7 +251,7 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(customerId);
             }
 
-            var updatedCustomer = _customerService.UpdateCustomerStatusOn(customerId, customerStatus);
+            var updatedCustomer = await _customerService.UpdateCustomerStatusOn(customerId, customerStatus);
 
             if (updatedCustomer.CustomerStatus != customerStatus)
             {
@@ -268,7 +269,7 @@ namespace OrderManagement.API.Controllers.v1
 
         // DELETE: api/v1/customers
         [HttpDelete]
-        public IActionResult DeleteCustomer(int customerId)
+        public async Task<IActionResult> DeleteCustomer(int customerId)
         {
             Logger.LogInfo("Attempting to delete customer...");
 
@@ -278,7 +279,7 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(customerId);
             }
 
-            var deletedCustomerId =_customerService.DeleteCustomer(customerId);
+            var deletedCustomerId = await _customerService.DeleteCustomer(customerId);
 
             if (deletedCustomerId != customerId)
             {

@@ -11,18 +11,18 @@ namespace OrderManagement.Application.Services
 {
     public interface ICustomerService
     {
-        Customer CreateCustomer(Customer customer);
-        List<Customer> GetAllCustomers(PaginationFilter paginationFilter, string route);
-        Customer GetCustomerById(int customerId);
-        List<Customer> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route);
-        List<Customer> GetLoyalCustomers(PaginationFilter paginationFilter, string route);
-        List<Customer> GetNoAccountCustomers(PaginationFilter paginationFilter, string route);
-        Customer UpdateCustomerAddressOn(int customerId, string address);
-        Customer UpdateCustomerMailOn(int customerId, string mail);
-        Customer UpdateCustomerNameOn(int customerId, string name);
-        Customer UpdateCustomerStatusOn(int customerId, CustomerStatus status);
-        Customer UpdateCustomer(Customer customer);
-        int DeactivateCustomerOn(int customerId);
-        int DeleteCustomer(int customerId);
+        Task<Customer> CreateCustomer(Customer customer);
+        Task<List<Customer>> GetAllCustomers(PaginationFilter paginationFilter, string route);
+        Task<Customer> GetCustomerById(int customerId);
+        Task<List<Customer>> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route);
+        Task<List<Customer>> GetLoyalCustomers(PaginationFilter paginationFilter, string route);
+        Task<List<Customer>> GetNoAccountCustomers(PaginationFilter paginationFilter, string route);
+        Task<Customer> UpdateCustomerAddressOn(int customerId, string address);
+        Task<Customer> UpdateCustomerMailOn(int customerId, string mail);
+        Task<Customer> UpdateCustomerNameOn(int customerId, string name);
+        Task<Customer> UpdateCustomerStatusOn(int customerId, CustomerStatus status);
+        Task<Customer> UpdateCustomer(Customer customer);
+        Task<int> DeactivateCustomerOn(int customerId);
+        Task<int> DeleteCustomer(int customerId);
     }
 }
