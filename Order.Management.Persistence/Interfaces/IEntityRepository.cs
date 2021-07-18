@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OrderManagement.Persistence.Interfaces
 {
     public interface IEntityRepository<T>
     {
-        T CreateEntity(T entity);
-        T GetEntityById(int id);
-        List<T> GetEntities();
-        T UpdateEntity(T entity);
-        T DeleteEntity(int id);
+        Task<T> CreateEntity(T entity);
+        Task<T> GetEntityById(int id);
+        Task<List<T>> GetEntities();
+        Task<T> UpdateEntity(T entity);
+        Task<T> DeleteEntity(int id);
     }
 }

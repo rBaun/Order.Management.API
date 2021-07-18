@@ -4,18 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OrderManagement.Application.Services;
+using OrderManagement.Application.UseCases.Customers.POST;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 using OrderManagement.Domain.Wrappers.Pagination;
+using OrderManagement.Persistence.Interfaces;
+using OrderManagement.Services.BusinessLogic.Interfaces;
 
 namespace OrderManagement.Services.CustomerUseCases
 {
     public class CustomerService : ICustomerService
     {
-        public Task<Customer> CreateCustomer(Customer customer)
+        private readonly ICreateCustomerUseCase _createCustomer;
+
+        public CustomerService(ICreateCustomerUseCase customer)
         {
-            throw new NotImplementedException();
+            _createCustomer = customer;
         }
+
+        public async Task<Customer> CreateCustomer(Customer customer) 
+            => await _createCustomer.Execute(customer);
 
         public Task<List<Customer>> GetAllCustomers(PaginationFilter paginationFilter, string route)
         {

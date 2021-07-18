@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 
@@ -6,12 +7,12 @@ namespace OrderManagement.Persistence.Interfaces
 {
     public interface ICustomerRepository : IEntityRepository<Customer>
     {
-        List<Customer> GetFirstTimeCustomers();
-        List<Customer> GetLoyalCustomers();
-        List<Customer> GetNoAccountCustomers();
-        Customer UpdateCustomerAddress(string address);
-        Customer UpdateCustomerMail(string mail);
-        Customer UpdateCustomerName(string name);
-        Customer UpdateCustomerStatus(CustomerStatus status);
+        Task<List<Customer>> GetFirstTimeCustomers();
+        Task<List<Customer>> GetLoyalCustomers();
+        Task<List<Customer>> GetNoAccountCustomers();
+        Task<Customer> UpdateCustomerAddress(string address);
+        Task<Customer> UpdateCustomerMail(string mail);
+        Task<Customer> UpdateCustomerName(string name);
+        Task<Customer> UpdateCustomerStatus(CustomerStatus status);
     }
 }
