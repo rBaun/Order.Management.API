@@ -12,7 +12,7 @@ namespace OrderManagement.Persistence.Repositories
     {
         private readonly IMongoCollection<Customer> _customerCollection;
 
-        public CustomerRepository(IMongoCollection<Customer> customerCollection)
+        public CustomerRepository()
         {
             _customerCollection = CustomersCollection.Open();
         }
@@ -29,9 +29,12 @@ namespace OrderManagement.Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<List<Customer>> GetEntities()
+        public async Task<List<Customer>> GetEntities()
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Customer>.Filter.Empty;
+            var customers = await _customerCollection.Find(filter).ToListAsync();
+
+            return customers;
         }
 
         public Task<Customer> UpdateEntity(Customer entity)

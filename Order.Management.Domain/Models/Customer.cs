@@ -7,7 +7,7 @@ namespace OrderManagement.Domain.Models
     public class Customer
     {
         [BsonId]
-        [BsonRepresentation(BsonType.String)]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string CustomerId { get; set; }
 
         [BsonElement("firstName")] public string FirstName { get; set; }

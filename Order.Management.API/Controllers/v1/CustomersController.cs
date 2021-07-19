@@ -33,10 +33,15 @@ namespace OrderManagement.API.Controllers.v1
 
             var createdCustomer = await _customerService.CreateCustomer(customer);
 
-            if (createdCustomer?.CustomerId != null)
+            if (string.IsNullOrWhiteSpace(createdCustomer?.CustomerId))
             {
                 Logger.LogError("Customer not created");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Customer not created");
+                var response = new Response<Customer>(customer)
+                {
+                    Message = "Customer not created"
+                };
+
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
             Logger.LogInfo("Customer created successfully!");
 

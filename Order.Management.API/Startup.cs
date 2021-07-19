@@ -5,9 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog;
-using OrderManagement.Persistence;
-using OrderManagement.Persistence.Wrappers;
-using OrderManagement.Persistence.Wrappers.Interfaces;
 
 namespace OrderManagement.API
 {
@@ -28,7 +25,6 @@ namespace OrderManagement.API
             services.ConfigureLoggerService();
             services.AddControllers();
             services.AddPersistence();
-            services.AddPersistenceWrappers(Configuration);
             services.AddServices();
             services.RegisterSwagger();
         }
