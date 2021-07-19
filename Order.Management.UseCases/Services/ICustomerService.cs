@@ -13,7 +13,7 @@ namespace OrderManagement.Application.Services
     {
         Task<Customer> CreateCustomer(Customer customer);
         Task<List<Customer>> GetAllCustomers(PaginationFilter paginationFilter, string route);
-        Task<Customer> GetCustomerById(int customerId);
+        Task<Customer> GetCustomerById(string customerId);
         Task<List<Customer>> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route);
         Task<List<Customer>> GetLoyalCustomers(PaginationFilter paginationFilter, string route);
         Task<List<Customer>> GetNoAccountCustomers(PaginationFilter paginationFilter, string route);

@@ -1,24 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Driver;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
+using OrderManagement.Persistence.Collections;
 using OrderManagement.Persistence.Interfaces;
-using OrderManagement.Persistence.Wrappers.Interfaces;
 
 namespace OrderManagement.Persistence.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly IDbAccess _dbAccess;
+        private readonly IMongoCollection<Customer> _customerCollection;
 
-        public CustomerRepository(IDbAccess dbAccess)
+        public CustomerRepository(IMongoCollection<Customer> customerCollection)
         {
-            _dbAccess = dbAccess;
+            _customerCollection = CustomersCollection.Open();
         }
 
-        public Task<Customer> CreateEntity(Customer entity)
+        public async Task<Customer> CreateEntity(Customer entity)
         {
-            throw new System.NotImplementedException();
+            await _customerCollection.InsertOneAsync(entity);
+
+            return entity;
         }
 
         public Task<Customer> GetEntityById(int id)

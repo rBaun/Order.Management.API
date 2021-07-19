@@ -33,7 +33,7 @@ namespace OrderManagement.API.Controllers.v1
 
             var createdCustomer = await _customerService.CreateCustomer(customer);
 
-            if (createdCustomer?.CustomerId < 1)
+            if (createdCustomer?.CustomerId != null)
             {
                 Logger.LogError("Customer not created");
                 return StatusCode(StatusCodes.Status500InternalServerError, "Customer not created");
@@ -50,10 +50,10 @@ namespace OrderManagement.API.Controllers.v1
 
         // GET: api/v1/customers/{customerId}
         [HttpGet("{customerId:int}")]
-        public async Task<IActionResult> GetCustomerById([FromRoute] int customerId)
+        public async Task<IActionResult> GetCustomerById([FromRoute] string customerId)
         {
             Logger.LogInfo("Validating customer id...");
-            if (customerId < 1)
+            if (string.IsNullOrWhiteSpace(customerId))
             {
                 Logger.LogError("Invalid customer id");
                 return BadRequest($"Invalid customer id: {customerId}");
@@ -127,7 +127,7 @@ namespace OrderManagement.API.Controllers.v1
         {
             Logger.LogInfo("Attempting to update customer...");
 
-            if (customer.CustomerId < 1)
+            if (string.IsNullOrWhiteSpace(customer.CustomerId))
             {
                 Logger.LogError("Invalid customer id");
                 return BadRequest(customer);

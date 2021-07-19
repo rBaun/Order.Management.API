@@ -30,7 +30,7 @@ namespace OrderManagement.Services.CustomerUseCases
             throw new NotImplementedException();
         }
 
-        public Task<Customer> GetCustomerById(int customerId)
+        public Task<Customer> GetCustomerById(string customerId)
         {
             throw new NotImplementedException();
         }
