@@ -86,6 +86,13 @@ namespace OrderManagement.API.Controllers.v1
             Logger.LogInfo("Fetching all customers...");
             var response = await _customerService.GetAllCustomers(paginationFilter, Request.Path.Value);
 
+            if (!response.Data.Any())
+            {
+                Logger.LogWarn("No Customers was found");
+                response.Message = "No customers was found matching the criteria.";
+                return Ok(response);
+            }
+
             if (response.Errors != null)
             {
                 Logger.LogError("Something went wrong");
@@ -191,7 +198,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Message = "Address not updated. Check the errors and try again.";
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
-            } 
+            }
             Logger.LogInfo("Address updated successfully!");
 
             return Ok(response);
@@ -224,7 +231,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
-            Logger.LogInfo("Mail updated successfully!");    
+            Logger.LogInfo("Mail updated successfully!");
 
             return Ok(response);
         }
@@ -283,7 +290,7 @@ namespace OrderManagement.API.Controllers.v1
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
             Logger.LogInfo("Customer status updated successfully!");
-            
+
             return Ok(response);
         }
 
