@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,22 +33,19 @@ namespace OrderManagement.API.Controllers.v1
             if (customer == null)
                 return BadRequest();
 
-            var createdCustomer = await _customerService.CreateCustomer(customer);
+            var response = await _customerService.CreateCustomer(customer);
 
-            if (string.IsNullOrWhiteSpace(createdCustomer?.CustomerId))
+            if (response.Errors.Any())
             {
                 Logger.LogError("Customer not created");
-                var response = new Response<Customer>(customer)
-                {
-                    Message = "Customer not created"
-                };
-
+                response.Message = "Customer not created. Check the errors and try again.";
+                response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
             Logger.LogInfo("Customer created successfully!");
 
 
-            return Created($"api/v1/customers/{createdCustomer?.CustomerId}", new Response<Customer>(createdCustomer));
+            return Created($"api/v1/customers/{response.Data.CustomerId}", response);
         }
 
         #endregion
@@ -66,17 +64,19 @@ namespace OrderManagement.API.Controllers.v1
             }
 
             Logger.LogInfo("Attempting to fetch customer record...");
-            var customer = await _customerService.GetCustomerById(customerId);
+            var response = await _customerService.GetCustomerById(customerId);
 
-            if (customer.CustomerId != customerId)
+            if (response.Errors.Any())
             {
                 Logger.LogWarn("Customer not found");
-                return NotFound(customerId);
+                response.Message = "Customer not found. Check the errors and try again.";
+                response.Succeeded = false;
+                return NotFound(response);
             }
             Logger.LogInfo("Customer found!");
 
 
-            return Ok(customer);
+            return Ok(response);
         }
 
         // GET: api/v1/customers
@@ -84,10 +84,18 @@ namespace OrderManagement.API.Controllers.v1
         public async Task<IActionResult> GetAllCustomers([FromQuery] PaginationFilter paginationFilter)
         {
             Logger.LogInfo("Fetching all customers...");
-            var customers = await _customerService.GetAllCustomers(paginationFilter, Request.Path.Value);
+            var response = await _customerService.GetAllCustomers(paginationFilter, Request.Path.Value);
+
+            if (response.Errors != null)
+            {
+                Logger.LogError("Something went wrong");
+                response.Message = "Customers not found. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
             Logger.LogInfo("Customers found!");
 
-            return Ok(new Response<List<Customer>>(customers));
+            return Ok(response);
         }
 
         // GET: api/v1/customers/firstTimers
@@ -139,12 +147,14 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(customer);
             }
 
-            var updatedCustomer = await _customerService.UpdateCustomer(customer);
+            var response = await _customerService.UpdateCustomer(customer);
 
-            if (updatedCustomer != customer)
+            if (response.Errors.Any())
             {
                 Logger.LogError("Customer not updated");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Customer not updated");
+                response.Message = "Customer not updated. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
             Logger.LogInfo("Customer updated successfully!");
 
@@ -173,16 +183,18 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(address);
             }
 
-            var updatedCustomer = await _customerService.UpdateCustomerAddressOn(customerId, address);
+            var response = await _customerService.UpdateCustomerAddressOn(customerId, address);
 
-            if (updatedCustomer.Address != address)
+            if (response.Errors.Any())
             {
                 Logger.LogError("Address not updated");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Customer address not updated");
+                response.Message = "Address not updated. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             } 
             Logger.LogInfo("Address updated successfully!");
 
-            return Ok(updatedCustomer);
+            return Ok(response);
         }
 
         // PATCH: api/v1/customers/update/mail
@@ -203,16 +215,18 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(mail);
             }
 
-            var updatedCustomer = await _customerService.UpdateCustomerMailOn(customerId, mail);
+            var response = await _customerService.UpdateCustomerMailOn(customerId, mail);
 
-            if (updatedCustomer.Mail != mail)
+            if (response.Errors.Any())
             {
                 Logger.LogError("E-mail not updated");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Customer mail not updated");
+                response.Message = "Mail not updated. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
             Logger.LogInfo("Mail updated successfully!");    
 
-            return Ok(updatedCustomer);
+            return Ok(response);
         }
 
         // PATCH: api/v1/customers/update/name
@@ -233,16 +247,18 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(name);
             }
 
-            var updatedCustomer = await _customerService.UpdateCustomerNameOn(customerId, name);
+            var response = await _customerService.UpdateCustomerNameOn(customerId, name);
 
-            if (updatedCustomer.Mail != name)
+            if (response.Errors.Any())
             {
                 Logger.LogError("Name not updated");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Customer name not updated");
+                response.Message = "Name not updated. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
             Logger.LogInfo("Name updated successfully!");
 
-            return Ok(updatedCustomer);
+            return Ok(response);
         }
 
         // PATCH: api/v1/customers/update/status
@@ -257,16 +273,18 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(customerId);
             }
 
-            var updatedCustomer = await _customerService.UpdateCustomerStatusOn(customerId, customerStatus);
+            var response = await _customerService.UpdateCustomerStatusOn(customerId, customerStatus);
 
-            if (updatedCustomer.CustomerStatus != customerStatus)
+            if (response.Errors.Any())
             {
                 Logger.LogError("Customer status not updated");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Customer status not updated");
+                response.Message = "Customer status not updated. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
             Logger.LogInfo("Customer status updated successfully!");
             
-            return Ok(updatedCustomer);
+            return Ok(response);
         }
 
         #endregion
@@ -285,16 +303,18 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(customerId);
             }
 
-            var deletedCustomerId = await _customerService.DeleteCustomer(customerId);
+            var response = await _customerService.DeleteCustomer(customerId);
 
-            if (deletedCustomerId != customerId)
+            if (response.Errors.Any())
             {
                 Logger.LogError("Customer not deleted");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Customer not deleted");
+                response.Message = "Customer not removed. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
             Logger.LogInfo("Customer deleted successfully!");
 
-            return Ok(deletedCustomerId);
+            return Ok(response);
         }
 
         #endregion

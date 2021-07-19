@@ -8,6 +8,7 @@ using OrderManagement.Application.UseCases.Customers.GET;
 using OrderManagement.Application.UseCases.Customers.POST;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
+using OrderManagement.Domain.Wrappers.Common;
 using OrderManagement.Domain.Wrappers.Pagination;
 using OrderManagement.Persistence.Interfaces;
 using OrderManagement.Services.BusinessLogic.Interfaces;
@@ -25,63 +26,63 @@ namespace OrderManagement.Services.CustomerUseCases
             _getAllCustomers = allCustomers;
         }
 
-        public async Task<Customer> CreateCustomer(Customer customer) 
+        public async Task<Response<Customer>> CreateCustomer(Customer customer) 
             => await _createCustomer.Execute(customer);
 
-        public async Task<List<Customer>> GetAllCustomers(PaginationFilter paginationFilter, string route)
-            => await _getAllCustomers.Execute();
+        public async Task<PagedResponse<List<Customer>>> GetAllCustomers(PaginationFilter paginationFilter, string route)
+            => await _getAllCustomers.Execute(paginationFilter, route);
 
-        public Task<Customer> GetCustomerById(string customerId)
+        public Task<Response<Customer>> GetCustomerById(string customerId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Customer>> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route)
+        public Task<PagedResponse<List<Customer>>> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Customer>> GetLoyalCustomers(PaginationFilter paginationFilter, string route)
+        public Task<PagedResponse<List<Customer>>> GetLoyalCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Customer>> GetNoAccountCustomers(PaginationFilter paginationFilter, string route)
+        public Task<PagedResponse<List<Customer>>> GetNoAccountCustomers(PaginationFilter paginationFilter, string route)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Customer> UpdateCustomerAddressOn(int customerId, string address)
+        public Task<Response<Customer>> UpdateCustomerAddressOn(int customerId, string address)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Customer> UpdateCustomerMailOn(int customerId, string mail)
+        public Task<Response<Customer>> UpdateCustomerMailOn(int customerId, string mail)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Customer> UpdateCustomerNameOn(int customerId, string name)
+        public Task<Response<Customer>> UpdateCustomerNameOn(int customerId, string name)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Customer> UpdateCustomerStatusOn(int customerId, CustomerStatus status)
+        public Task<Response<Customer>> UpdateCustomerStatusOn(int customerId, CustomerStatus status)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Customer> UpdateCustomer(Customer customer)
+        public Task<Response<Customer>> UpdateCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> DeactivateCustomerOn(int customerId)
+        public Task<Response<int>> DeactivateCustomerOn(int customerId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteCustomer(int customerId)
+        public Task<Response<int>> DeleteCustomer(int customerId)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OrderManagement.Domain.Models;
@@ -16,18 +17,14 @@ namespace OrderManagement.Services.BusinessLogic
             _customerRepository = customerRepository;
         }
 
-        public async Task<bool> ValidateCustomerEmail(string email)
+        public async Task<bool> ValidateCustomerEmail(string email, List<Customer> customers)
         {
-            var customers = await _customerRepository.GetEntities();
-
             return customers.Count(customer => 
                        string.Equals(customer.Mail, email, StringComparison.CurrentCultureIgnoreCase)) == 0;
         }
 
-        public async Task<bool> ValidateCustomerPhone(string phone)
+        public async Task<bool> ValidateCustomerPhone(string phone, List<Customer> customers)
         {
-            var customers = await _customerRepository.GetEntities();
-
             return customers.Count(customer =>
                        string.Equals(customer.Phone, phone, StringComparison.CurrentCultureIgnoreCase)) == 0;
         }

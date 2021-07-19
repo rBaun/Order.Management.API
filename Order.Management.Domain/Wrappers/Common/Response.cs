@@ -10,7 +10,7 @@ namespace OrderManagement.Domain.Wrappers.Common
     {
         public T Data { get; set; }
         public bool Succeeded { get; set; }
-        public string[] Errors { get; set; }
+        public List<string> Errors { get; set; }
         public string Message { get; set; }
 
         public Response() {}
@@ -19,7 +19,7 @@ namespace OrderManagement.Domain.Wrappers.Common
         {
             Data = data;
             Succeeded = true;
-            Errors = null;
+            Errors = new List<string>();
             Message = string.Empty;
         }
     }
