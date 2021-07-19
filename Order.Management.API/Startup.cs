@@ -26,6 +26,7 @@ namespace OrderManagement.API
             services.AddControllers();
             services.AddPersistence();
             services.AddServices();
+            services.AddUriService();
             services.RegisterSwagger();
         }
 

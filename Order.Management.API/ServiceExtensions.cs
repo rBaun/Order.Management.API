@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using OrderManagement.Application.Extensions;
 using OrderManagement.Application.Extensions.Interfaces;
+using OrderManagement.Domain.Helpers;
 
 namespace OrderManagement.API
 {
@@ -46,6 +48,19 @@ namespace OrderManagement.API
             Services.ServiceExtensions.AddCustomerUseCases(services);
             Services.ServiceExtensions.AddOrderUseCases(services);
             Services.ServiceExtensions.AddProductUseCases(services);
+        }
+
+        public static void AddUriService(this IServiceCollection services)
+        {
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IUriGenerator>(sp =>
+            {
+                var accessor = sp.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+
+                return new UriGenerator(uri);
+            });
         }
     }
 }
