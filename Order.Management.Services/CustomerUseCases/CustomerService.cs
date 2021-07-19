@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OrderManagement.Application.Services;
+using OrderManagement.Application.UseCases.Customers.GET;
 using OrderManagement.Application.UseCases.Customers.POST;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
@@ -16,19 +17,19 @@ namespace OrderManagement.Services.CustomerUseCases
     public class CustomerService : ICustomerService
     {
         private readonly ICreateCustomerUseCase _createCustomer;
+        private readonly IGetAllCustomersUseCase _getAllCustomers;
 
-        public CustomerService(ICreateCustomerUseCase customer)
+        public CustomerService(ICreateCustomerUseCase customer, IGetAllCustomersUseCase allCustomers)
         {
             _createCustomer = customer;
+            _getAllCustomers = allCustomers;
         }
 
         public async Task<Customer> CreateCustomer(Customer customer) 
             => await _createCustomer.Execute(customer);
 
-        public Task<List<Customer>> GetAllCustomers(PaginationFilter paginationFilter, string route)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<Customer>> GetAllCustomers(PaginationFilter paginationFilter, string route)
+            => await _getAllCustomers.Execute();
 
         public Task<Customer> GetCustomerById(string customerId)
         {

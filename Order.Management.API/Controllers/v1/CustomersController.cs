@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrderManagement.Application.Extensions.Interfaces;
@@ -54,7 +55,7 @@ namespace OrderManagement.API.Controllers.v1
         #region GET Requests
 
         // GET: api/v1/customers/{customerId}
-        [HttpGet("{customerId:int}")]
+        [HttpGet("{customerId}")]
         public async Task<IActionResult> GetCustomerById([FromRoute] string customerId)
         {
             Logger.LogInfo("Validating customer id...");
@@ -80,13 +81,13 @@ namespace OrderManagement.API.Controllers.v1
 
         // GET: api/v1/customers
         [HttpGet]
-        public async Task<IActionResult> GetAllCustomers(PaginationFilter paginationFilter)
+        public async Task<IActionResult> GetAllCustomers([FromQuery] PaginationFilter paginationFilter)
         {
             Logger.LogInfo("Fetching all customers...");
             var customers = await _customerService.GetAllCustomers(paginationFilter, Request.Path.Value);
             Logger.LogInfo("Customers found!");
 
-            return Ok(customers);
+            return Ok(new Response<List<Customer>>(customers));
         }
 
         // GET: api/v1/customers/firstTimers
