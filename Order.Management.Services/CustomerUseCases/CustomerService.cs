@@ -17,17 +17,17 @@ namespace OrderManagement.Services.CustomerUseCases
 {
     public class CustomerService : ICustomerService
     {
-        private readonly ICreateCustomerUseCase _createCustomer;
+        private readonly ICreateCustomerUseCase _createCreateCustomer;
         private readonly IGetAllCustomersUseCase _getAllCustomers;
 
-        public CustomerService(ICreateCustomerUseCase customer, IGetAllCustomersUseCase allCustomers)
+        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers)
         {
-            _createCustomer = customer;
+            _createCreateCustomer = createCustomer;
             _getAllCustomers = allCustomers;
         }
 
         public async Task<Response<Customer>> CreateCustomer(Customer customer) 
-            => await _createCustomer.Execute(customer);
+            => await _createCreateCustomer.Execute(customer);
 
         public async Task<PagedResponse<List<Customer>>> GetAllCustomers(PaginationFilter paginationFilter, string route)
             => await _getAllCustomers.Execute(paginationFilter, route);

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.Services", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.Persistence", "Order.Management.Persistence\OrderManagement.Persistence.csproj", "{BC69798F-0954-404C-B65B-8DF89EC0CA7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagement.Tests", "Order.Management.Tests\OrderManagement.Tests.csproj", "{72BD919C-68B7-4F4D-8858-525A04F4457C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagement.Tests", "Order.Management.Tests\OrderManagement.Tests.csproj", "{D1D97180-F2F0-4C7C-808C-742C5BF8A1D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{BC69798F-0954-404C-B65B-8DF89EC0CA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC69798F-0954-404C-B65B-8DF89EC0CA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC69798F-0954-404C-B65B-8DF89EC0CA7E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72BD919C-68B7-4F4D-8858-525A04F4457C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72BD919C-68B7-4F4D-8858-525A04F4457C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72BD919C-68B7-4F4D-8858-525A04F4457C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72BD919C-68B7-4F4D-8858-525A04F4457C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1D97180-F2F0-4C7C-808C-742C5BF8A1D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1D97180-F2F0-4C7C-808C-742C5BF8A1D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1D97180-F2F0-4C7C-808C-742C5BF8A1D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1D97180-F2F0-4C7C-808C-742C5BF8A1D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
