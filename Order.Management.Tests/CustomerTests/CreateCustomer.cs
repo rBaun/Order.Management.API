@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xunit;
-using Moq;
 using OrderManagement.Domain.Models;
-using OrderManagement.Persistence.Interfaces;
-using OrderManagement.Services.BusinessLogic.Interfaces;
-using OrderManagement.Services.CustomerUseCases;
 using OrderManagement.Services.CustomerUseCases.POST;
 using OrderManagement.Tests.Mocks;
 

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using OrderManagement.Application.UseCases.Customers.POST;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;

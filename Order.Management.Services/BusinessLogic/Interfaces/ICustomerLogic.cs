@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 
 namespace OrderManagement.Services.BusinessLogic.Interfaces

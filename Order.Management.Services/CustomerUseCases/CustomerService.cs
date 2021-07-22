@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using OrderManagement.Application.Services;
 using OrderManagement.Application.UseCases.Customers.GET;
@@ -10,8 +8,6 @@ using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 using OrderManagement.Domain.Wrappers.Common;
 using OrderManagement.Domain.Wrappers.Pagination;
-using OrderManagement.Persistence.Interfaces;
-using OrderManagement.Services.BusinessLogic.Interfaces;
 
 namespace OrderManagement.Services.CustomerUseCases
 {

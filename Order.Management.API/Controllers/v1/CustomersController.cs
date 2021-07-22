@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +6,6 @@ using OrderManagement.Application.Extensions.Interfaces;
 using OrderManagement.Application.Services;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
-using OrderManagement.Domain.Wrappers.Common;
 using OrderManagement.Domain.Wrappers.Pagination;
 
 namespace OrderManagement.API.Controllers.v1

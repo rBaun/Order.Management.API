@@ -1,11 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NLog.Fluent;
 using OrderManagement.Application.Extensions.Interfaces;
 using OrderManagement.Application.Services;
-using OrderManagement.Application.UseCases.Products.POST;
 using OrderManagement.Domain.Models;
 using OrderManagement.Domain.Wrappers.Common;
 
