@@ -7,34 +7,46 @@ namespace OrderManagement.Tests.Mocks
 {
     public class MockCustomerLogic : Mock<ICustomerLogic>
     {
-        public void MockValidateRequiredCustomerFieldsTrue(Customer customer)
+        public MockCustomerLogic MockValidateRequiredCustomerFieldsTrue(Customer customer)
         {
             Setup(x => x.ValidateRequiredCustomerFields(customer)).ReturnsAsync(true);
+
+            return this;
         }
 
-        public void MockValidateRequiredCustomerFieldsFalse(Customer customer)
+        public MockCustomerLogic MockValidateRequiredCustomerFieldsFalse(Customer customer)
         {
             Setup(x => x.ValidateRequiredCustomerFields(customer)).ReturnsAsync(false);
+
+            return this;
         }
 
-        public void MockValidateCustomerEmailTrue(string mail, List<Customer> customers)
+        public MockCustomerLogic MockValidateCustomerEmailTrue(string mail, List<Customer> customers)
         {
             Setup(x => x.ValidateCustomerEmail(mail, customers)).ReturnsAsync(true);
+
+            return this;
         }
 
-        public void MockValidateCustomerEmailFalse(string mail, List<Customer> customers)
+        public MockCustomerLogic MockValidateCustomerEmailFalse(string mail, List<Customer> customers)
         {
             Setup(x => x.ValidateCustomerEmail(mail, customers)).ReturnsAsync(false);
+
+            return this;
         }
 
-        public void MockValidateCustomerPhoneTrue(string phone, List<Customer> customers)
+        public MockCustomerLogic MockValidateCustomerPhoneTrue(string phone, List<Customer> customers)
         {
             Setup(x => x.ValidateCustomerPhone(phone, customers)).ReturnsAsync(true);
+
+            return this;
         }
 
-        public void MockValidateCustomerPhoneFalse(string phone, List<Customer> customers)
+        public MockCustomerLogic MockValidateCustomerPhoneFalse(string phone, List<Customer> customers)
         {
             Setup(x => x.ValidateCustomerPhone(phone, customers)).ReturnsAsync(false);
+
+            return this;
         }
     }
 }

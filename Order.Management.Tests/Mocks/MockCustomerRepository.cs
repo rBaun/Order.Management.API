@@ -7,14 +7,18 @@ namespace OrderManagement.Tests.Mocks
 {
     public class MockCustomerRepository : Mock<ICustomerRepository>
     {
-        public void MockCreateEntity(Customer customer)
+        public MockCustomerRepository MockCreateEntity(Customer customer)
         {
             Setup(x => x.CreateEntity(customer)).ReturnsAsync(customer);
+
+            return this;
         }
 
-        public void MockGetEntities(List<Customer> customers)
+        public MockCustomerRepository MockGetEntities(List<Customer> customers)
         {
             Setup(x => x.GetEntities()).ReturnsAsync(customers);
+
+            return this;
         }
     }
 }

@@ -46,14 +46,14 @@ namespace OrderManagement.Tests.CustomerTests
         public void CreateCustomer_InputsValidCustomer_ShouldReturnCreatedCustomer()
         {
             // Arrange
-            var mockCustomerRepository = new MockCustomerRepository();
-            mockCustomerRepository.MockCreateEntity(CustomerWithRequiredFields);
-            mockCustomerRepository.MockGetEntities(Customers);
+            var mockCustomerRepository = new MockCustomerRepository()
+                .MockCreateEntity(CustomerWithRequiredFields)
+                .MockGetEntities(Customers);
 
-            var mockCustomerLogic = new MockCustomerLogic();
-            mockCustomerLogic.MockValidateCustomerEmailTrue(CustomerWithRequiredFields.Mail, Customers);
-            mockCustomerLogic.MockValidateCustomerPhoneTrue(CustomerWithRequiredFields.Phone, Customers);
-            mockCustomerLogic.MockValidateRequiredCustomerFieldsTrue(CustomerWithRequiredFields);
+            var mockCustomerLogic = new MockCustomerLogic()
+                .MockValidateCustomerEmailTrue(CustomerWithRequiredFields.Mail, Customers)
+                .MockValidateCustomerPhoneTrue(CustomerWithRequiredFields.Phone, Customers)
+                .MockValidateRequiredCustomerFieldsTrue(CustomerWithRequiredFields);
 
             var createCustomerUseCase = new CreateCustomerUseCase(mockCustomerLogic.Object, mockCustomerRepository.Object);
 
