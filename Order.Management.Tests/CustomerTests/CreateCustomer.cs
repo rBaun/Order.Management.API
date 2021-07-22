@@ -7,6 +7,7 @@ using OrderManagement.Persistence.Interfaces;
 using OrderManagement.Services.BusinessLogic.Interfaces;
 using OrderManagement.Services.CustomerUseCases;
 using OrderManagement.Services.CustomerUseCases.POST;
+using OrderManagement.Tests.Mocks;
 
 namespace OrderManagement.Tests.CustomerTests
 {
@@ -49,50 +50,44 @@ namespace OrderManagement.Tests.CustomerTests
         public void CreateCustomer_InputsValidCustomer_ShouldReturnCreatedCustomer()
         {
             // Arrange
-            var customerRepository = new Mock<ICustomerRepository>();
-            var customerLogic = new Mock<ICustomerLogic>();
+            var mockCustomerRepository = new MockCustomerRepository();
+            mockCustomerRepository.MockCreateEntity(CustomerWithRequiredFields);
+            mockCustomerRepository.MockGetEntities(Customers);
 
-            customerRepository.Setup(x => x.CreateEntity(CustomerWithRequiredFields)).ReturnsAsync(CustomerWithRequiredFields);
-            customerRepository.Setup(x => x.GetEntities()).ReturnsAsync(Customers);
+            var mockCustomerLogic = new MockCustomerLogic();
+            mockCustomerLogic.MockValidateCustomerEmailTrue(CustomerWithRequiredFields.Mail, Customers);
+            mockCustomerLogic.MockValidateCustomerPhoneTrue(CustomerWithRequiredFields.Phone, Customers);
+            mockCustomerLogic.MockValidateRequiredCustomerFieldsTrue(CustomerWithRequiredFields);
 
-            customerLogic.Setup(x => x.ValidateRequiredCustomerFields(CustomerWithRequiredFields)).ReturnsAsync(true);
-            customerLogic.Setup(x => x.ValidateCustomerEmail(CustomerWithRequiredFields.Mail, Customers)).ReturnsAsync(true);
-            customerLogic.Setup(x => x.ValidateCustomerPhone(CustomerWithRequiredFields.Phone, Customers))
-                .ReturnsAsync(true);
-
-            var createCustomerUseCase = new CreateCustomerUseCase(customerLogic.Object, customerRepository.Object);
-            var customerService = new CustomerService(createCustomerUseCase, null);
+            var createCustomerUseCase = new CreateCustomerUseCase(mockCustomerLogic.Object, mockCustomerRepository.Object);
 
             // Act
-            var createdCustomer = customerService.CreateCustomer(CustomerWithRequiredFields).Result;
+            var result = createCustomerUseCase.Execute(CustomerWithRequiredFields).Result;
 
             // Assert
-            Assert.True(createdCustomer.Errors.Count == 0);
+            Assert.True(result.Errors.Count == 0);
         }
 
         [Fact(DisplayName = "INTEGRATION: Create Customer - Invalid Input")]
         public void CreateCustomer_InputsInvalidCustomer_ShouldReturnErrorMessage()
         {
             // Arrange
-            var customerRepository = new Mock<ICustomerRepository>();
-            var customerLogic = new Mock<ICustomerLogic>();
+            var mockCustomerRepository = new MockCustomerRepository();
+            mockCustomerRepository.MockCreateEntity(CustomerWithRequiredFields);
+            mockCustomerRepository.MockGetEntities(Customers);
 
-            customerRepository.Setup(x => x.CreateEntity(CustomerWithoutRequiredFields)).ReturnsAsync(CustomerWithoutRequiredFields);
-            customerRepository.Setup(x => x.GetEntities()).ReturnsAsync(Customers);
+            var mockCustomerLogic = new MockCustomerLogic();
+            mockCustomerLogic.MockValidateCustomerEmailFalse(CustomerWithRequiredFields.Mail, Customers);
+            mockCustomerLogic.MockValidateCustomerPhoneFalse(CustomerWithRequiredFields.Phone, Customers);
+            mockCustomerLogic.MockValidateRequiredCustomerFieldsFalse(CustomerWithRequiredFields);
 
-            customerLogic.Setup(x => x.ValidateRequiredCustomerFields(CustomerWithoutRequiredFields)).ReturnsAsync(false);
-            customerLogic.Setup(x => x.ValidateCustomerEmail(CustomerWithoutRequiredFields.Mail, Customers)).ReturnsAsync(false);
-            customerLogic.Setup(x => x.ValidateCustomerPhone(CustomerWithoutRequiredFields.Phone, Customers))
-                .ReturnsAsync(true);
-
-            var createCustomerUseCase = new CreateCustomerUseCase(customerLogic.Object, customerRepository.Object);
-            var customerService = new CustomerService(createCustomerUseCase, null);
+            var createCustomerUseCase = new CreateCustomerUseCase(mockCustomerLogic.Object, mockCustomerRepository.Object);
 
             // Act
-            var createdCustomer = customerService.CreateCustomer(CustomerWithRequiredFields).Result;
+            var result = createCustomerUseCase.Execute(CustomerWithRequiredFields).Result;
 
             // Assert
-            Assert.True(createdCustomer.Errors.Count > 0);
+            Assert.True(result.Errors.Count > 0);
         }
     }
 }
