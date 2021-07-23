@@ -20,5 +20,12 @@ namespace OrderManagement.Tests.Mocks
 
             return this;
         }
+
+        public MockCustomerRepository MockGetEntityById(Customer customer)
+        {
+            Setup(x => x.GetEntityById(customer.CustomerId)).ReturnsAsync(customer);
+
+            return this;
+        }
     }
 }
