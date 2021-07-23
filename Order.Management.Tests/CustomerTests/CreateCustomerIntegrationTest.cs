@@ -7,13 +7,13 @@ using OrderManagement.Tests.Mocks;
 
 namespace OrderManagement.Tests.CustomerTests
 {
-    public class CreateCustomer : IDisposable
+    public class CreateCustomerIntegrationTest : IDisposable
     {
         private Customer CustomerWithRequiredFields { get; set; }
         private Customer CustomerWithoutRequiredFields { get; set; }
         private List<Customer> Customers { get; set; }
 
-        public CreateCustomer()
+        public CreateCustomerIntegrationTest()
         {
             CustomerWithRequiredFields = new Customer
             {

@@ -7,7 +7,7 @@ using Xunit;
 
 namespace OrderManagement.Tests.CustomerTests
 {
-    public class CreateCustomerLogic : IDisposable
+    public class CustomerLogicUnitTest : IDisposable
     {
         public string ValidMail { get; set; }
         public string InvalidMail { get; set; }
@@ -17,7 +17,7 @@ namespace OrderManagement.Tests.CustomerTests
         public Customer CustomerWithInvalidDetails { get; set; }
         public List<Customer> Customers { get; set; }
 
-        public CreateCustomerLogic()
+        public CustomerLogicUnitTest()
         {
             ValidMail = "jane_joe@janesdoe.com";
             InvalidMail = "existin@gmail.com";

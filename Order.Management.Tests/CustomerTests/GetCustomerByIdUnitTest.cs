@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 using OrderManagement.Services.CustomerUseCases.GET;
@@ -11,11 +7,11 @@ using Xunit;
 
 namespace OrderManagement.Tests.CustomerTests
 {
-    public class GetCustomerById : IDisposable
+    public class GetCustomerByIdUnitTest : IDisposable
     {
         public Customer ExistingCustomer { get; set; }
 
-        public GetCustomerById()
+        public GetCustomerByIdUnitTest()
         {
             ExistingCustomer = new Customer
             {
