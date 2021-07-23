@@ -48,7 +48,7 @@ namespace OrderManagement.Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<Order> GetEntityById(int id)
+        public Task<Order> GetEntityById(string id)
         {
             throw new System.NotImplementedException();
         }
@@ -63,7 +63,7 @@ namespace OrderManagement.Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<Order> DeleteEntity(int id)
+        public Task<Order> DeleteEntity(string id)
         {
             throw new System.NotImplementedException();
         }

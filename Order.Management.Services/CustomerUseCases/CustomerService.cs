@@ -13,25 +13,27 @@ namespace OrderManagement.Services.CustomerUseCases
 {
     public class CustomerService : ICustomerService
     {
+        #region Dependency Injection
         private readonly ICreateCustomerUseCase _createCreateCustomer;
         private readonly IGetAllCustomersUseCase _getAllCustomers;
+        private readonly IGetCustomerByIdUseCase _getCustomerById;
 
-        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers)
+        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById)
         {
             _createCreateCustomer = createCustomer;
             _getAllCustomers = allCustomers;
+            _getCustomerById = customerById;
         }
-
+        #endregion
+        
         public async Task<Response<Customer>> CreateCustomer(Customer customer) 
             => await _createCreateCustomer.Execute(customer);
 
         public async Task<PagedResponse<List<Customer>>> GetAllCustomers(PaginationFilter paginationFilter, string route)
             => await _getAllCustomers.Execute(paginationFilter, route);
 
-        public Task<Response<Customer>> GetCustomerById(string customerId)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Response<Customer>> GetCustomerById(string customerId)
+            => await _getCustomerById.Execute(customerId);
 
         public Task<PagedResponse<List<Customer>>> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route)
         {
