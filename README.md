@@ -1,8 +1,8 @@
 # Developer Notes
 
-* Refactor to use Response wrappers in every project/layer
-  * Add errors where appropiate
-  * Return the response object instead of creating new response in controller
+* Refactor to use global error handling
+  * HttpInterceptor
+  * Generic error message on Response wrapper object
 
 
 description coming soon...
