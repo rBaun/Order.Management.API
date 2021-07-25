@@ -91,7 +91,7 @@ namespace OrderManagement.API.Controllers.v1
                 return Ok(response);
             }
 
-            if (response.Errors != null)
+            if (response.Errors.Any())
             {
                 Logger.LogError("Something went wrong");
                 response.Message = "Customers not found. Check the errors and try again.";
@@ -105,13 +105,29 @@ namespace OrderManagement.API.Controllers.v1
 
         // GET: api/v1/customers/firstTimers
         [HttpGet("firstTimers")]
-        public async Task<IActionResult> GetAllFirstTimeCustomers(PaginationFilter paginationFilter)
+        public async Task<IActionResult> GetAllFirstTimeCustomers([FromQuery] PaginationFilter paginationFilter)
         {
             Logger.LogInfo("Fetching all first-time customers...");
-            var customers = await _customerService.GetFirstTimeCustomers(paginationFilter, Request.Path.Value);
+            var response = await _customerService.GetFirstTimeCustomers(paginationFilter, Request.Path.Value);
+
+            if (!response.Data.Any())
+            {
+                Logger.LogWarn("No First-Time Customers was found");
+                response.Message = "No First-Time Customers was found matching the criteria.";
+                return Ok(response);
+            }
+
+            if (response.Errors.Any())
+            {
+                Logger.LogError("Something went wrong");
+                response.Message = "Customers not found. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
+
             Logger.LogInfo("Customers found!");
 
-            return Ok(customers);
+            return Ok(response);
         }
 
         // GET: api/v1/customers/loyal

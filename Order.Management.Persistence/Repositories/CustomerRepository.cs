@@ -51,9 +51,12 @@ namespace OrderManagement.Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<List<Customer>> GetFirstTimeCustomers()
+        public async Task<List<Customer>> GetFirstTimeCustomers()
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("customerStatus", CustomerStatus.PurchasedOnce);
+            var firstTimeCustomers = await _customerCollection.Find(filter).ToListAsync();
+
+            return firstTimeCustomers;
         }
 
         public Task<List<Customer>> GetLoyalCustomers()

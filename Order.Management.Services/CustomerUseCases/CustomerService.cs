@@ -17,12 +17,14 @@ namespace OrderManagement.Services.CustomerUseCases
         private readonly ICreateCustomerUseCase _createCreateCustomer;
         private readonly IGetAllCustomersUseCase _getAllCustomers;
         private readonly IGetCustomerByIdUseCase _getCustomerById;
+        private readonly IGetFirstTimeCustomersUseCase _getFirstTimeCustomers;
 
-        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById)
+        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers)
         {
             _createCreateCustomer = createCustomer;
             _getAllCustomers = allCustomers;
             _getCustomerById = customerById;
+            _getFirstTimeCustomers = firstTimeCustomers;
         }
         #endregion
         
@@ -35,10 +37,8 @@ namespace OrderManagement.Services.CustomerUseCases
         public async Task<Response<Customer>> GetCustomerById(string customerId)
             => await _getCustomerById.Execute(customerId);
 
-        public Task<PagedResponse<List<Customer>>> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<PagedResponse<List<Customer>>> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route)
+            => await _getFirstTimeCustomers.Execute(paginationFilter, route);
 
         public Task<PagedResponse<List<Customer>>> GetLoyalCustomers(PaginationFilter paginationFilter, string route)
         {
