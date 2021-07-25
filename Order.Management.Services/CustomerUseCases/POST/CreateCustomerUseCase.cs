@@ -2,6 +2,7 @@
 using OrderManagement.Application.UseCases.Customers.POST;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
+using OrderManagement.Domain.Wrappers.Common;
 using OrderManagement.Persistence.Interfaces;
 using OrderManagement.Services.BusinessLogic.Interfaces;
 
@@ -18,20 +19,27 @@ namespace OrderManagement.Services.CustomerUseCases.POST
             _customerRepository = customerRepository;
         }
 
-        public async Task<Customer> Execute(Customer customer)
+        public async Task<Response<Customer>> Execute(Customer customer)
         {
-            if (!await _customerLogic.ValidateCustomerEmail(customer.Mail))
-                return null;
+            var response = new Response<Customer>(customer);
+            var allCustomers = await _customerRepository.GetEntities();
 
-            if (!await _customerLogic.ValidateCustomerPhone(customer.Phone))
-                return null;
+            if (!await _customerLogic.ValidateCustomerEmail(customer.Mail, allCustomers))
+                response.Errors.Add($"Mail address invalid: {customer.Mail}");
+
+            if (!await _customerLogic.ValidateCustomerPhone(customer.Phone, allCustomers))
+                response.Errors.Add($"Phone number invalid: {customer.Phone}");
 
             if (!await _customerLogic.ValidateRequiredCustomerFields(customer))
-                return null;
+                response.Errors.Add("Required customer fields invalid");
 
-            customer.CustomerStatus = CustomerStatus.Customer;
+            if (response.Errors == null)
+            {
+                response.Data.CustomerStatus = CustomerStatus.Customer;
+                response.Data = await _customerRepository.CreateEntity(response.Data);
+            }
 
-            return await _customerRepository.CreateEntity(customer);
+            return response;
         }
     }
 }

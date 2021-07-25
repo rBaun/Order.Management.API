@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
@@ -24,9 +25,12 @@ namespace OrderManagement.Persistence.Repositories
             return entity;
         }
 
-        public Task<Customer> GetEntityById(int id)
+        public async Task<Customer> GetEntityById(string id)
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("_id", ObjectId.Parse(id));
+            var customer = await _customerCollection.Find(filter).FirstOrDefaultAsync();
+
+            return customer;
         }
 
         public async Task<List<Customer>> GetEntities()
@@ -42,24 +46,33 @@ namespace OrderManagement.Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<Customer> DeleteEntity(int id)
+        public Task<Customer> DeleteEntity(string id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<List<Customer>> GetFirstTimeCustomers()
+        public async Task<List<Customer>> GetFirstTimeCustomers()
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("customerStatus", CustomerStatus.PurchasedOnce);
+            var firstTimeCustomers = await _customerCollection.Find(filter).ToListAsync();
+
+            return firstTimeCustomers;
         }
 
-        public Task<List<Customer>> GetLoyalCustomers()
+        public async Task<List<Customer>> GetLoyalCustomers()
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("customerStatus", CustomerStatus.PurchasedMultiple);
+            var loyalCustomers = await _customerCollection.Find(filter).ToListAsync();
+
+            return loyalCustomers;
         }
 
-        public Task<List<Customer>> GetNoAccountCustomers()
+        public async Task<List<Customer>> GetNoAccountCustomers()
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("customerStatus", CustomerStatus.NoAccount);
+            var noAccountCustomers = await _customerCollection.Find(filter).ToListAsync();
+
+            return noAccountCustomers;
         }
 
         public Task<Customer> UpdateCustomerAddress(string address)

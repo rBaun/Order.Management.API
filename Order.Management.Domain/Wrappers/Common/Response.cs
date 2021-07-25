@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace OrderManagement.Domain.Wrappers.Common
 {
@@ -10,16 +6,19 @@ namespace OrderManagement.Domain.Wrappers.Common
     {
         public T Data { get; set; }
         public bool Succeeded { get; set; }
-        public string[] Errors { get; set; }
+        public List<string> Errors { get; set; }
         public string Message { get; set; }
 
-        public Response() {}
+        public Response()
+        {
+            Errors = new List<string>();
+        }
 
         public Response(T data)
         {
             Data = data;
             Succeeded = true;
-            Errors = null;
+            Errors = new List<string>();
             Message = string.Empty;
         }
     }

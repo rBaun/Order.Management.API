@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OrderManagement.Domain.Wrappers.Common;
 
 namespace OrderManagement.Domain.Wrappers.Pagination
@@ -25,8 +22,18 @@ namespace OrderManagement.Domain.Wrappers.Pagination
             PageSize = pageSize;
             Data = data;
             Succeeded = true;
-            Errors = null;
+            Errors = new List<string>();
             Message = string.Empty;
+        }
+
+        public PagedResponse(int pageNumber, int pageSize)
+        {
+            Errors = new List<string>();
+        }
+
+        public PagedResponse()
+        {
+            Errors = new List<string>();
         }
     }
 }

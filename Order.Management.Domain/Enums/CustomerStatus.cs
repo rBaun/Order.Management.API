@@ -2,10 +2,10 @@
 {
     public enum CustomerStatus
     {
-        NoAccount = 0,
-        Customer = 1,
-        PurchasedOnce = 2,
-        PurchasedMultiple = 3,
-        Deactivated = 99
+        NoAccount,
+        Customer,
+        PurchasedOnce,
+        PurchasedMultiple,
+        Deactivated
     }
 }
