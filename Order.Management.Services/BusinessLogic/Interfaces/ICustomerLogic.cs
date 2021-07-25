@@ -6,8 +6,8 @@ namespace OrderManagement.Services.BusinessLogic.Interfaces
 {
     public interface ICustomerLogic
     {
-        Task<bool> ValidateCustomerEmail(string email, List<Customer> customers);
-        Task<bool> ValidateCustomerPhone(string phone, List<Customer> customers);
-        Task<bool> ValidateRequiredCustomerFields(Customer customer);
+        bool HasExistingMail(string email, List<Customer> customers);
+        bool HasExistingPhone(string phone, List<Customer> customers); 
+        bool HasRequiredCustomerFields(Customer customer);
     }
 }

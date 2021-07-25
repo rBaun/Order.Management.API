@@ -24,13 +24,13 @@ namespace OrderManagement.Services.CustomerUseCases.POST
             var response = new Response<Customer>(customer);
             var allCustomers = await _customerRepository.GetEntities();
 
-            if (!await _customerLogic.ValidateCustomerEmail(customer.Mail, allCustomers))
+            if (_customerLogic.HasExistingMail(customer.Mail, allCustomers))
                 response.Errors.Add($"Mail address invalid: {customer.Mail}");
 
-            if (!await _customerLogic.ValidateCustomerPhone(customer.Phone, allCustomers))
+            if (_customerLogic.HasExistingPhone(customer.Phone, allCustomers))
                 response.Errors.Add($"Phone number invalid: {customer.Phone}");
 
-            if (!await _customerLogic.ValidateRequiredCustomerFields(customer))
+            if (!_customerLogic.HasRequiredCustomerFields(customer))
                 response.Errors.Add("Required customer fields invalid");
 
             if (response.Errors == null)

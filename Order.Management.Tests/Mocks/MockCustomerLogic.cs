@@ -9,42 +9,42 @@ namespace OrderManagement.Tests.Mocks
     {
         public MockCustomerLogic MockValidateRequiredCustomerFieldsTrue(Customer customer)
         {
-            Setup(x => x.ValidateRequiredCustomerFields(customer)).ReturnsAsync(true);
+            Setup(x => x.HasRequiredCustomerFields(customer)).Returns(true);
 
             return this;
         }
 
         public MockCustomerLogic MockValidateRequiredCustomerFieldsFalse(Customer customer)
         {
-            Setup(x => x.ValidateRequiredCustomerFields(customer)).ReturnsAsync(false);
+            Setup(x => x.HasRequiredCustomerFields(customer)).Returns(false);
 
             return this;
         }
 
         public MockCustomerLogic MockValidateCustomerEmailTrue(string mail, List<Customer> customers)
         {
-            Setup(x => x.ValidateCustomerEmail(mail, customers)).ReturnsAsync(true);
+            Setup(x => x.HasExistingMail(mail, customers)).Returns(true);
 
             return this;
         }
 
         public MockCustomerLogic MockValidateCustomerEmailFalse(string mail, List<Customer> customers)
         {
-            Setup(x => x.ValidateCustomerEmail(mail, customers)).ReturnsAsync(false);
+            Setup(x => x.HasExistingMail(mail, customers)).Returns(false);
 
             return this;
         }
 
         public MockCustomerLogic MockValidateCustomerPhoneTrue(string phone, List<Customer> customers)
         {
-            Setup(x => x.ValidateCustomerPhone(phone, customers)).ReturnsAsync(true);
+            Setup(x => x.HasExistingPhone(phone, customers)).Returns(true);
 
             return this;
         }
 
         public MockCustomerLogic MockValidateCustomerPhoneFalse(string phone, List<Customer> customers)
         {
-            Setup(x => x.ValidateCustomerPhone(phone, customers)).ReturnsAsync(false);
+            Setup(x => x.HasExistingPhone(phone, customers)).Returns(false);
 
             return this;
         }

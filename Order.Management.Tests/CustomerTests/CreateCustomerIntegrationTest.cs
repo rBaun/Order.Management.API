@@ -51,8 +51,8 @@ namespace OrderManagement.Tests.CustomerTests
                 .MockGetEntities(Customers);
 
             var mockCustomerLogic = new MockCustomerLogic()
-                .MockValidateCustomerEmailTrue(CustomerWithRequiredFields.Mail, Customers)
-                .MockValidateCustomerPhoneTrue(CustomerWithRequiredFields.Phone, Customers)
+                .MockValidateCustomerEmailFalse(CustomerWithRequiredFields.Mail, Customers)
+                .MockValidateCustomerPhoneFalse(CustomerWithRequiredFields.Phone, Customers)
                 .MockValidateRequiredCustomerFieldsTrue(CustomerWithRequiredFields);
 
             var createCustomerUseCase = new CreateCustomerUseCase(mockCustomerLogic.Object, mockCustomerRepository.Object);
@@ -73,8 +73,8 @@ namespace OrderManagement.Tests.CustomerTests
             mockCustomerRepository.MockGetEntities(Customers);
 
             var mockCustomerLogic = new MockCustomerLogic();
-            mockCustomerLogic.MockValidateCustomerEmailFalse(CustomerWithRequiredFields.Mail, Customers);
-            mockCustomerLogic.MockValidateCustomerPhoneFalse(CustomerWithRequiredFields.Phone, Customers);
+            mockCustomerLogic.MockValidateCustomerEmailTrue(CustomerWithRequiredFields.Mail, Customers);
+            mockCustomerLogic.MockValidateCustomerPhoneTrue(CustomerWithRequiredFields.Phone, Customers);
             mockCustomerLogic.MockValidateRequiredCustomerFieldsFalse(CustomerWithRequiredFields);
 
             var createCustomerUseCase = new CreateCustomerUseCase(mockCustomerLogic.Object, mockCustomerRepository.Object);

@@ -21,7 +21,6 @@ namespace OrderManagement.API.Controllers.v1
         }
 
         #region POST Requests
-
         // POST: api/v1/customers/add
         [HttpPost("add")]
         public async Task<IActionResult> CreateCustomer([FromQuery] Customer customer)
@@ -45,11 +44,9 @@ namespace OrderManagement.API.Controllers.v1
 
             return Created($"api/v1/customers/{response.Data.CustomerId}", response);
         }
-
         #endregion
 
         #region GET Requests
-
         // GET: api/v1/customers/{customerId}
         [HttpGet("{customerId}")]
         public async Task<IActionResult> GetCustomerById([FromRoute] string customerId)
@@ -180,11 +177,9 @@ namespace OrderManagement.API.Controllers.v1
 
             return Ok(response);
         }
-
         #endregion
 
         #region PUT Requests
-
         // PUT: api/v1/customers
         [HttpPut]
         public async Task<IActionResult> UpdateCustomer([FromQuery] Customer customer)
@@ -210,11 +205,9 @@ namespace OrderManagement.API.Controllers.v1
 
             return Ok(customer);
         }
-
         #endregion
 
         #region PATCH Requests
-
         // PATCH: api/v1/customers/update/address
         [HttpPatch("update/address")]
         public async Task<IActionResult> PatchCustomerAddress(int customerId, string address)
@@ -336,11 +329,9 @@ namespace OrderManagement.API.Controllers.v1
 
             return Ok(response);
         }
-
         #endregion
 
         #region DELETE Requests
-
         // DELETE: api/v1/customers
         [HttpDelete]
         public async Task<IActionResult> DeleteCustomer(int customerId)
@@ -366,7 +357,6 @@ namespace OrderManagement.API.Controllers.v1
 
             return Ok(response);
         }
-
         #endregion
     }
 }

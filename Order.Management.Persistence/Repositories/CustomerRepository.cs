@@ -41,9 +41,17 @@ namespace OrderManagement.Persistence.Repositories
             return customers;
         }
 
-        public Task<Customer> UpdateEntity(Customer entity)
+        public async Task<Customer> UpdateEntity(Customer entity)
         {
-            throw new System.NotImplementedException();
+            var options = new FindOneAndReplaceOptions<Customer>
+            {
+                ReturnDocument = ReturnDocument.After
+            };
+            var updatedCustomer =
+                await _customerCollection.FindOneAndReplaceAsync<Customer>(
+                    customer => customer.CustomerId == entity.CustomerId, entity, options);
+
+            return updatedCustomer;
         }
 
         public Task<Customer> DeleteEntity(string id)
