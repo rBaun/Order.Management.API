@@ -59,9 +59,12 @@ namespace OrderManagement.Persistence.Repositories
             return firstTimeCustomers;
         }
 
-        public Task<List<Customer>> GetLoyalCustomers()
+        public async Task<List<Customer>> GetLoyalCustomers()
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("customerStatus", CustomerStatus.PurchasedMultiple);
+            var loyalCustomers = await _customerCollection.Find(filter).ToListAsync();
+
+            return loyalCustomers;
         }
 
         public Task<List<Customer>> GetNoAccountCustomers()

@@ -11,6 +11,10 @@ using OrderManagement.Domain.Wrappers.Pagination;
 
 namespace OrderManagement.Services.CustomerUseCases
 {
+    /**
+     * This is a filler class utilized to make the controller easier to read and maintain.
+     * The sole purpose of this class is to avoid dependency injecting all the use cases in the customer controller
+     */
     public class CustomerService : ICustomerService
     {
         #region Dependency Injection
@@ -18,16 +22,19 @@ namespace OrderManagement.Services.CustomerUseCases
         private readonly IGetAllCustomersUseCase _getAllCustomers;
         private readonly IGetCustomerByIdUseCase _getCustomerById;
         private readonly IGetFirstTimeCustomersUseCase _getFirstTimeCustomers;
+        private readonly IGetLoyalCustomersUseCase _getLoyalCustomers;
 
-        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers)
+        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers)
         {
             _createCreateCustomer = createCustomer;
             _getAllCustomers = allCustomers;
             _getCustomerById = customerById;
             _getFirstTimeCustomers = firstTimeCustomers;
+            _getLoyalCustomers = loyalCustomers;
         }
         #endregion
-        
+
+        #region Use Cases
         public async Task<Response<Customer>> CreateCustomer(Customer customer) 
             => await _createCreateCustomer.Execute(customer);
 
@@ -40,10 +47,8 @@ namespace OrderManagement.Services.CustomerUseCases
         public async Task<PagedResponse<List<Customer>>> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route)
             => await _getFirstTimeCustomers.Execute(paginationFilter, route);
 
-        public Task<PagedResponse<List<Customer>>> GetLoyalCustomers(PaginationFilter paginationFilter, string route)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<PagedResponse<List<Customer>>> GetLoyalCustomers(PaginationFilter paginationFilter, string route)
+            => await _getLoyalCustomers.Execute(paginationFilter, route);
 
         public Task<PagedResponse<List<Customer>>> GetNoAccountCustomers(PaginationFilter paginationFilter, string route)
         {
@@ -84,5 +89,6 @@ namespace OrderManagement.Services.CustomerUseCases
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

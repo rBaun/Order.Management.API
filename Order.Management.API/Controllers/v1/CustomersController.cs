@@ -124,7 +124,6 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
-
             Logger.LogInfo("Customers found!");
 
             return Ok(response);
@@ -132,13 +131,28 @@ namespace OrderManagement.API.Controllers.v1
 
         // GET: api/v1/customers/loyal
         [HttpGet("loyal")]
-        public async Task<IActionResult> GetAllLoyalCustomers(PaginationFilter paginationFilter)
+        public async Task<IActionResult> GetAllLoyalCustomers([FromQuery] PaginationFilter paginationFilter)
         {
             Logger.LogInfo("Fetching all loyal customers...");
-            var customers = await _customerService.GetLoyalCustomers(paginationFilter, Request.Path.Value);
+            var response = await _customerService.GetLoyalCustomers(paginationFilter, Request.Path.Value);
+
+            if (!response.Data.Any())
+            {
+                Logger.LogWarn("No Loyal Customers was found");
+                response.Message = "No Loyal Customers was found matching the criteria.";
+                return Ok(response);
+            }
+
+            if (response.Errors.Any())
+            {
+                Logger.LogError("Something went wrong");
+                response.Message = "Customers not found. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
             Logger.LogInfo("Customers found!");
 
-            return Ok(customers);
+            return Ok(response);
         }
 
         // GET: api/v1/customers/noAccount
