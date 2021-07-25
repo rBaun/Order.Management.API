@@ -26,14 +26,7 @@ namespace OrderManagement.Services.CustomerUseCases.GET
             var firstTimeCustomers = await _customerRepository.GetFirstTimeCustomers();
             var validatedFilter = PaginationHelper.ValidatePaginationFilter(paginationFilter);
 
-            return PaginationHelper.CreatePagedResponse(firstTimeCustomers
-                    .Search(validatedFilter.SearchTerm)
-                    .Sort(validatedFilter.OrderBy)
-                    .Skip((validatedFilter.PageNumber - 1) * validatedFilter.PageSize)
-                    .Take(validatedFilter.PageSize)
-                    .ToList(), validatedFilter, firstTimeCustomers.Search(validatedFilter.SearchTerm).Count,
-                _uriGenerator,
-                route);
+            return firstTimeCustomers.CreateCustomerPagedResponse(validatedFilter, _uriGenerator, route);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OrderManagement.Domain.Helpers;
+using OrderManagement.Domain.Models;
 
 namespace OrderManagement.Domain.Wrappers.Pagination
 {

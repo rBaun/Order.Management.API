@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using OrderManagement.Domain.Helpers;
 using OrderManagement.Domain.Models;
+using OrderManagement.Domain.Wrappers.Pagination;
 
 namespace OrderManagement.Persistence.EntityExtensions
 {
@@ -27,6 +29,17 @@ namespace OrderManagement.Persistence.EntityExtensions
                 "phone" => customers.OrderBy(customer => customer.Phone).ToList(),
                 _ => customers.OrderBy(customer => customer.LastName).ToList(),
             };
+        }
+
+        public static PagedResponse<List<Customer>> CreateCustomerPagedResponse(this List<Customer> pagedCustomers,
+            PaginationFilter validatedFilter, IUriGenerator uriGenerator, string route)
+        {
+            return PaginationHelper.CreatePagedResponse(pagedCustomers
+                .Search(validatedFilter.SearchTerm)
+                .Sort(validatedFilter.OrderBy)
+                .Skip((validatedFilter.PageNumber - 1) * validatedFilter.PageSize)
+                .Take(validatedFilter.PageSize)
+                .ToList(), validatedFilter, pagedCustomers.Search(validatedFilter.SearchTerm).Count, uriGenerator, route);
         }
     }
 }

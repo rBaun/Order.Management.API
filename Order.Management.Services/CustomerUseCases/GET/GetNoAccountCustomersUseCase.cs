@@ -25,14 +25,7 @@ namespace OrderManagement.Services.CustomerUseCases.GET
             var noAccountCustomers = await _customerRepository.GetNoAccountCustomers();
             var validatedFilter = PaginationHelper.ValidatePaginationFilter(paginationFilter);
 
-            return PaginationHelper.CreatePagedResponse(noAccountCustomers
-                    .Search(validatedFilter.SearchTerm)
-                    .Sort(validatedFilter.OrderBy)
-                    .Skip((validatedFilter.PageNumber - 1) * validatedFilter.PageSize)
-                    .Take(validatedFilter.PageSize).ToList(), validatedFilter,
-                noAccountCustomers.Search(validatedFilter.SearchTerm).Count, 
-                _uriGenerator, 
-                route);
+            return noAccountCustomers.CreateCustomerPagedResponse(validatedFilter, _uriGenerator, route);
         }
     }
 }
