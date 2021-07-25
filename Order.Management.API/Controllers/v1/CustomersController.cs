@@ -157,13 +157,28 @@ namespace OrderManagement.API.Controllers.v1
 
         // GET: api/v1/customers/noAccount
         [HttpGet("noAccount")]
-        public async Task<IActionResult> GetAllNoAccountCustomers(PaginationFilter paginationFilter)
+        public async Task<IActionResult> GetAllNoAccountCustomers([FromQuery] PaginationFilter paginationFilter)
         {
             Logger.LogInfo("Fetching all customers without accounts...");
-            var customers = await _customerService.GetNoAccountCustomers(paginationFilter, Request.Path.Value);
+            var response = await _customerService.GetNoAccountCustomers(paginationFilter, Request.Path.Value);
+
+            if (!response.Data.Any())
+            {
+                Logger.LogWarn("No No Account Customers was found");
+                response.Message = "No No Account Customers was found matching the criteria.";
+                return Ok(response);
+            }
+
+            if (response.Errors.Any())
+            {
+                Logger.LogError("Something went wrong");
+                response.Message = "Customers not found. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
             Logger.LogInfo("Customers found!");
 
-            return Ok(customers);
+            return Ok(response);
         }
 
         #endregion

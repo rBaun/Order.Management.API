@@ -67,9 +67,12 @@ namespace OrderManagement.Persistence.Repositories
             return loyalCustomers;
         }
 
-        public Task<List<Customer>> GetNoAccountCustomers()
+        public async Task<List<Customer>> GetNoAccountCustomers()
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("customerStatus", CustomerStatus.NoAccount);
+            var noAccountCustomers = await _customerCollection.Find(filter).ToListAsync();
+
+            return noAccountCustomers;
         }
 
         public Task<Customer> UpdateCustomerAddress(string address)
