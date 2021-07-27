@@ -57,10 +57,10 @@ namespace OrderManagement.Tests.CustomerTests
             var customerLogic = new CustomerLogic(new MockCustomerRepository().Object);
 
             // Act
-            var result = customerLogic.ValidateCustomerEmail(validMail, customers).Result;
+            var result = customerLogic.HasExistingMail(validMail, customers);
 
             // Assert
-            Assert.True(result);
+            Assert.False(result);
         }
 
         [Fact(DisplayName = "UNIT: Validate Mail - Invalid Input")]
@@ -72,10 +72,10 @@ namespace OrderManagement.Tests.CustomerTests
             var customerLogic = new CustomerLogic(new MockCustomerRepository().Object);
 
             // Act
-            var result = customerLogic.ValidateCustomerEmail(existingMail, customers).Result;
+            var result = customerLogic.HasExistingMail(existingMail, customers);
 
             // Assert
-            Assert.False(result);
+            Assert.True(result);
         }
 
         [Fact(DisplayName = "UNIT: Validate Phone - Valid Input")]
@@ -87,10 +87,10 @@ namespace OrderManagement.Tests.CustomerTests
             var customerLogic = new CustomerLogic(new MockCustomerRepository().Object);
 
             // Act
-            var result = customerLogic.ValidateCustomerPhone(validPhone, customers).Result;
+            var result = customerLogic.HasExistingPhone(validPhone, customers);
 
             // Assert
-            Assert.True(result);
+            Assert.False(result);
         }
 
         [Fact(DisplayName = "UNIT: Validate Phone - Invalid Input")]
@@ -102,10 +102,10 @@ namespace OrderManagement.Tests.CustomerTests
             var customerLogic = new CustomerLogic(new MockCustomerRepository().Object);
 
             // Act
-            var result = customerLogic.ValidateCustomerPhone(existingPhone, customers).Result;
+            var result = customerLogic.HasExistingPhone(existingPhone, customers);
 
             // Assert
-            Assert.False(result);
+            Assert.True(result);
         }
 
         [Fact(DisplayName = "UNIT: Validate Customer Details - Valid Input")]
@@ -116,7 +116,7 @@ namespace OrderManagement.Tests.CustomerTests
             var customerLogic = new CustomerLogic(new MockCustomerRepository().Object);
 
             // Act
-            var result = customerLogic.ValidateRequiredCustomerFields(validCustomer).Result;
+            var result = customerLogic.HasRequiredCustomerFields(validCustomer);
 
             // Assert
             Assert.True(result);
@@ -130,7 +130,7 @@ namespace OrderManagement.Tests.CustomerTests
             var customerLogic = new CustomerLogic(new MockCustomerRepository().Object);
 
             // Act
-            var result = customerLogic.ValidateRequiredCustomerFields(invalidCustomer).Result;
+            var result = customerLogic.HasRequiredCustomerFields(invalidCustomer);
 
             // Assert
             Assert.False(result);

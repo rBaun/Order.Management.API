@@ -10,9 +10,9 @@ namespace OrderManagement.Persistence.Interfaces
         Task<List<Customer>> GetFirstTimeCustomers();
         Task<List<Customer>> GetLoyalCustomers();
         Task<List<Customer>> GetNoAccountCustomers();
-        Task<Customer> UpdateCustomerAddress(string address);
-        Task<Customer> UpdateCustomerMail(string mail);
-        Task<Customer> UpdateCustomerName(string name);
-        Task<Customer> UpdateCustomerStatus(CustomerStatus status);
+        Task<string> UpdateCustomerAddress(string customerId, string address);
+        Task<string> UpdateCustomerMail(string customerId, string mail);
+        Task<string> UpdateCustomerName(string customerId, string name);
+        Task<CustomerStatus> UpdateCustomerStatus(string customerId, CustomerStatus status);
     }
 }

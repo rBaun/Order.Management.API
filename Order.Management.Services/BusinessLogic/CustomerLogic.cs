@@ -17,32 +17,56 @@ namespace OrderManagement.Services.BusinessLogic
             _customerRepository = customerRepository;
         }
 
-        public async Task<bool> ValidateCustomerEmail(string email, List<Customer> customers)
+        public bool HasExistingMail(string email, List<Customer> customers)
         {
-            return customers.Count(customer =>
-                       string.Equals(customer.Mail, email, StringComparison.CurrentCultureIgnoreCase)) == 0;
+            return customers.Exists(customer =>
+                       string.Equals(customer.Mail, email, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        public async Task<bool> ValidateCustomerPhone(string phone, List<Customer> customers)
+        public bool HasExistingPhone(string phone, List<Customer> customers)
         {
-            return customers.Count(customer =>
-                       string.Equals(customer.Phone, phone, StringComparison.CurrentCultureIgnoreCase)) == 0;
+            return customers.Exists(customer =>
+                       string.Equals(customer.Phone, phone, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        public async Task<bool> ValidateRequiredCustomerFields(Customer customer)
+        public bool HasRequiredCustomerFields(Customer customer)
         {
             if (customer.FirstName?.Length < 3 || string.IsNullOrWhiteSpace(customer.FirstName) 
                                               || customer.LastName?.Length < 3 
                                               || string.IsNullOrWhiteSpace(customer.LastName))
                 return false;
 
-            if (customer.Address?.Length < 3 || string.IsNullOrWhiteSpace(customer.Address))
+            if (!HasValidAddress(customer.Address))
                 return false;
 
             if (customer.Mail?.Length < 3 || string.IsNullOrWhiteSpace(customer.Mail))
                 return false;
 
             return true;
+        }
+
+        public bool HasValidAddress(string address)
+        {
+            if (string.IsNullOrWhiteSpace(address))
+                return false;
+
+            if (address.Length < 3)
+                return false;
+
+            return true;
+        }
+
+        public bool HasValidMail(string mail)
+        {
+            try
+            {
+                var mailAddress = new System.Net.Mail.MailAddress(mail);
+                return mailAddress.Address == mail;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using OrderManagement.Application.Services;
 using OrderManagement.Application.UseCases.Customers.GET;
+using OrderManagement.Application.UseCases.Customers.PATCH;
 using OrderManagement.Application.UseCases.Customers.POST;
+using OrderManagement.Application.UseCases.Customers.PUT;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 using OrderManagement.Domain.Wrappers.Common;
@@ -24,8 +26,11 @@ namespace OrderManagement.Services.CustomerUseCases
         private readonly IGetFirstTimeCustomersUseCase _getFirstTimeCustomers;
         private readonly IGetLoyalCustomersUseCase _getLoyalCustomers;
         private readonly IGetNoAccountCustomersUseCase _getNoAccountCustomers;
+        private readonly IUpdateCustomerUseCase _updateCustomer;
+        private readonly IUpdateCustomerAddressUseCase _updateCustomerAddress;
+        private readonly IUpdateCustomerMailUseCase _updateCustomerMail;
 
-        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers)
+        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers, IUpdateCustomerUseCase updateCustomer, IUpdateCustomerAddressUseCase updateCustomerAddress, IUpdateCustomerMailUseCase updateCustomerMail)
         {
             _createCreateCustomer = createCustomer;
             _getAllCustomers = allCustomers;
@@ -33,6 +38,9 @@ namespace OrderManagement.Services.CustomerUseCases
             _getFirstTimeCustomers = firstTimeCustomers;
             _getLoyalCustomers = loyalCustomers;
             _getNoAccountCustomers = noAccountCustomers;
+            _updateCustomer = updateCustomer;
+            _updateCustomerAddress = updateCustomerAddress;
+            _updateCustomerMail = updateCustomerMail;
         }
         #endregion
 
@@ -55,37 +63,31 @@ namespace OrderManagement.Services.CustomerUseCases
         public async Task<PagedResponse<List<Customer>>> GetNoAccountCustomers(PaginationFilter paginationFilter, string route)
             => await _getNoAccountCustomers.Execute(paginationFilter, route);
 
-        public Task<Response<Customer>> UpdateCustomerAddressOn(int customerId, string address)
+        public async Task<Response<string>> UpdateCustomerAddressOn(string customerId, string address)
+            => await _updateCustomerAddress.Execute(customerId, address);
+
+        public async Task<Response<string>> UpdateCustomerMailOn(string customerId, string mail)
+            => await _updateCustomerMail.Execute(customerId, mail);
+
+        public Task<Response<string>> UpdateCustomerNameOn(string customerId, string name)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<Customer>> UpdateCustomerMailOn(int customerId, string mail)
+        public Task<Response<CustomerStatus>> UpdateCustomerStatusOn(string customerId, CustomerStatus status)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<Customer>> UpdateCustomerNameOn(int customerId, string name)
+        public async Task<Response<Customer>> UpdateCustomer(Customer customer)
+            => await _updateCustomer.Execute(customer);
+
+        public Task<Response<int>> DeactivateCustomerOn(string customerId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<Customer>> UpdateCustomerStatusOn(int customerId, CustomerStatus status)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Response<Customer>> UpdateCustomer(Customer customer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Response<int>> DeactivateCustomerOn(int customerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Response<int>> DeleteCustomer(int customerId)
+        public Task<Response<int>> DeleteCustomer(string customerId)
         {
             throw new NotImplementedException();
         }
