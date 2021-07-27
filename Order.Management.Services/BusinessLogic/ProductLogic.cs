@@ -1,45 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
+using OrderManagement.Persistence.Interfaces;
 using OrderManagement.Services.BusinessLogic.Interfaces;
 
 namespace OrderManagement.Services.BusinessLogic
 {
     public class ProductLogic : IProductLogic
     {
-        public Product ProductIsInStock(Product product)
+        private readonly IProductRepository _productRepository;
+
+        public ProductLogic(IProductRepository productRepository)
         {
-            if (product == null)
-                return null;
-
-            if (product.Stock > 0)
-                product.ProductStatus = ProductStatus.InStock;
-
-            return product;
+            _productRepository = productRepository;
         }
 
-        public bool ValidateProductDetails(Product product)
+        public bool HasValidStock(int stock)
         {
-            if (product == null)
+            if (stock < 0)
                 return false;
 
-            return !string.IsNullOrWhiteSpace(product.Name) && product.Name.Length >= 2;
+            if (stock > 999)
+                return false;
+
+            return true;
         }
 
-        public bool ProductHasImage(Product product)
+        public bool HasValidName(string name)
         {
-            return product != null && string.IsNullOrWhiteSpace(product.ImageUrl);
+            if (string.IsNullOrWhiteSpace(name))
+                return false;
+            
+            if (name.Length < 2)
+                return false;
+
+            return true;
         }
 
-        public Product CheckIfProductIsNew(Product product)
+        public bool HasExistingProductName(string name, List<Product> products)
         {
-            if (product == null)
-                return null;
+            return products.Exists(product =>
+                string.Equals(product.Title, name, StringComparison.CurrentCultureIgnoreCase));
+        }
 
-            if (DateTime.Now.AddDays(-7) < product.CreatedOn)
-                product.IsNew = true;
+        public bool HasValidPrice(double price)
+        {
+            return price > 0;
+        }
 
-            return product;
+        public ProductStatus SetProductStockStatus(Product product)
+        {
+            return product.Stock == 0 
+                ? ProductStatus.OutOfStock 
+                : ProductStatus.InStock;
         }
     }
 }
