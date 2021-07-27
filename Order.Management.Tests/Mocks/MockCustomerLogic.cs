@@ -7,42 +7,42 @@ namespace OrderManagement.Tests.Mocks
 {
     public class MockCustomerLogic : Mock<ICustomerLogic>
     {
-        public MockCustomerLogic MockValidateRequiredCustomerFieldsTrue(Customer customer)
+        public MockCustomerLogic MockHasRequiredCustomerFieldsTrue(Customer customer)
         {
             Setup(x => x.HasRequiredCustomerFields(customer)).Returns(true);
 
             return this;
         }
 
-        public MockCustomerLogic MockValidateRequiredCustomerFieldsFalse(Customer customer)
+        public MockCustomerLogic MockHasRequiredCustomerFieldsFalse(Customer customer)
         {
             Setup(x => x.HasRequiredCustomerFields(customer)).Returns(false);
 
             return this;
         }
 
-        public MockCustomerLogic MockValidateCustomerEmailTrue(string mail, List<Customer> customers)
+        public MockCustomerLogic MockHasExistingMailTrue(string mail, List<Customer> customers)
         {
             Setup(x => x.HasExistingMail(mail, customers)).Returns(true);
 
             return this;
         }
 
-        public MockCustomerLogic MockValidateCustomerEmailFalse(string mail, List<Customer> customers)
+        public MockCustomerLogic MockHasExistingMailFalse(string mail, List<Customer> customers)
         {
             Setup(x => x.HasExistingMail(mail, customers)).Returns(false);
 
             return this;
         }
 
-        public MockCustomerLogic MockValidateCustomerPhoneTrue(string phone, List<Customer> customers)
+        public MockCustomerLogic MockHasExistingPhoneTrue(string phone, List<Customer> customers)
         {
             Setup(x => x.HasExistingPhone(phone, customers)).Returns(true);
 
             return this;
         }
 
-        public MockCustomerLogic MockValidateCustomerPhoneFalse(string phone, List<Customer> customers)
+        public MockCustomerLogic MockHasExistingPhoneFalse(string phone, List<Customer> customers)
         {
             Setup(x => x.HasExistingPhone(phone, customers)).Returns(false);
 

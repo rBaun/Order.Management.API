@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using OrderManagement.Application.UseCases.Customers.POST;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
@@ -33,7 +34,7 @@ namespace OrderManagement.Services.CustomerUseCases.POST
             if (!_customerLogic.HasRequiredCustomerFields(customer))
                 response.Errors.Add("Required customer fields invalid");
 
-            if (response.Errors == null)
+            if (!response.Errors.Any())
             {
                 response.Data.CustomerStatus = CustomerStatus.Customer;
                 response.Data = await _customerRepository.CreateEntity(response.Data);

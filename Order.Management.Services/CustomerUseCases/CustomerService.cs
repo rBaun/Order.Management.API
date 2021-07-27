@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using OrderManagement.Application.Services;
 using OrderManagement.Application.UseCases.Customers.GET;
 using OrderManagement.Application.UseCases.Customers.POST;
+using OrderManagement.Application.UseCases.Customers.PUT;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
 using OrderManagement.Domain.Wrappers.Common;
@@ -24,8 +25,9 @@ namespace OrderManagement.Services.CustomerUseCases
         private readonly IGetFirstTimeCustomersUseCase _getFirstTimeCustomers;
         private readonly IGetLoyalCustomersUseCase _getLoyalCustomers;
         private readonly IGetNoAccountCustomersUseCase _getNoAccountCustomers;
+        private readonly IUpdateCustomerUseCase _updateCustomer;
 
-        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers)
+        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers, IUpdateCustomerUseCase updateCustomer)
         {
             _createCreateCustomer = createCustomer;
             _getAllCustomers = allCustomers;
@@ -33,6 +35,7 @@ namespace OrderManagement.Services.CustomerUseCases
             _getFirstTimeCustomers = firstTimeCustomers;
             _getLoyalCustomers = loyalCustomers;
             _getNoAccountCustomers = noAccountCustomers;
+            _updateCustomer = updateCustomer;
         }
         #endregion
 
@@ -75,10 +78,8 @@ namespace OrderManagement.Services.CustomerUseCases
             throw new NotImplementedException();
         }
 
-        public Task<Response<Customer>> UpdateCustomer(Customer customer)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Response<Customer>> UpdateCustomer(Customer customer)
+            => await _updateCustomer.Execute(customer);
 
         public Task<Response<int>> DeactivateCustomerOn(int customerId)
         {

@@ -27,5 +27,12 @@ namespace OrderManagement.Tests.Mocks
 
             return this;
         }
+
+        public MockCustomerRepository MockUpdateCustomer(Customer customer)
+        {
+            Setup(x => x.UpdateEntity(customer)).ReturnsAsync(customer);
+
+            return this;
+        }
     }
 }
