@@ -15,10 +15,10 @@ namespace OrderManagement.Application.Services
         Task<PagedResponse<List<Customer>>> GetFirstTimeCustomers(PaginationFilter paginationFilter, string route);
         Task<PagedResponse<List<Customer>>> GetLoyalCustomers(PaginationFilter paginationFilter, string route);
         Task<PagedResponse<List<Customer>>> GetNoAccountCustomers(PaginationFilter paginationFilter, string route);
-        Task<Response<Customer>> UpdateCustomerAddressOn(string customerId, string address);
-        Task<Response<Customer>> UpdateCustomerMailOn(string customerId, string mail);
-        Task<Response<Customer>> UpdateCustomerNameOn(string customerId, string name);
-        Task<Response<Customer>> UpdateCustomerStatusOn(string customerId, CustomerStatus status);
+        Task<Response<string>> UpdateCustomerAddressOn(string customerId, string address);
+        Task<Response<string>> UpdateCustomerMailOn(string customerId, string mail);
+        Task<Response<string>> UpdateCustomerNameOn(string customerId, string name);
+        Task<Response<CustomerStatus>> UpdateCustomerStatusOn(string customerId, CustomerStatus status);
         Task<Response<Customer>> UpdateCustomer(Customer customer);
         Task<Response<int>> DeactivateCustomerOn(string customerId);
         Task<Response<int>> DeleteCustomer(string customerId);

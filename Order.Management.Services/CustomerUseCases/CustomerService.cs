@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using OrderManagement.Application.Services;
 using OrderManagement.Application.UseCases.Customers.GET;
+using OrderManagement.Application.UseCases.Customers.PATCH;
 using OrderManagement.Application.UseCases.Customers.POST;
 using OrderManagement.Application.UseCases.Customers.PUT;
 using OrderManagement.Domain.Enums;
@@ -26,8 +27,9 @@ namespace OrderManagement.Services.CustomerUseCases
         private readonly IGetLoyalCustomersUseCase _getLoyalCustomers;
         private readonly IGetNoAccountCustomersUseCase _getNoAccountCustomers;
         private readonly IUpdateCustomerUseCase _updateCustomer;
+        private readonly IUpdateCustomerAddressUseCase _updateCustomerAddress;
 
-        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers, IUpdateCustomerUseCase updateCustomer)
+        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers, IUpdateCustomerUseCase updateCustomer, IUpdateCustomerAddressUseCase updateCustomerAddress)
         {
             _createCreateCustomer = createCustomer;
             _getAllCustomers = allCustomers;
@@ -36,6 +38,7 @@ namespace OrderManagement.Services.CustomerUseCases
             _getLoyalCustomers = loyalCustomers;
             _getNoAccountCustomers = noAccountCustomers;
             _updateCustomer = updateCustomer;
+            _updateCustomerAddress = updateCustomerAddress;
         }
         #endregion
 
@@ -58,22 +61,20 @@ namespace OrderManagement.Services.CustomerUseCases
         public async Task<PagedResponse<List<Customer>>> GetNoAccountCustomers(PaginationFilter paginationFilter, string route)
             => await _getNoAccountCustomers.Execute(paginationFilter, route);
 
-        public Task<Response<Customer>> UpdateCustomerAddressOn(string customerId, string address)
+        public async Task<Response<string>> UpdateCustomerAddressOn(string customerId, string address)
+            => await _updateCustomerAddress.Execute(customerId, address);
+
+        public Task<Response<string>> UpdateCustomerMailOn(string customerId, string mail)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<Customer>> UpdateCustomerMailOn(string customerId, string mail)
+        public Task<Response<string>> UpdateCustomerNameOn(string customerId, string name)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<Customer>> UpdateCustomerNameOn(string customerId, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Response<Customer>> UpdateCustomerStatusOn(string customerId, CustomerStatus status)
+        public Task<Response<CustomerStatus>> UpdateCustomerStatusOn(string customerId, CustomerStatus status)
         {
             throw new NotImplementedException();
         }

@@ -9,5 +9,6 @@ namespace OrderManagement.Services.BusinessLogic.Interfaces
         bool HasExistingMail(string email, List<Customer> customers);
         bool HasExistingPhone(string phone, List<Customer> customers); 
         bool HasRequiredCustomerFields(Customer customer);
+        bool HasValidAddress(string address);
     }
 }

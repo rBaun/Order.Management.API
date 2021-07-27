@@ -83,22 +83,28 @@ namespace OrderManagement.Persistence.Repositories
             return noAccountCustomers;
         }
 
-        public Task<Customer> UpdateCustomerAddress(string address)
+        public async Task<string> UpdateCustomerAddress(string customerId, string address)
+        {
+            var filter = Builders<Customer>.Filter.Eq("_id", ObjectId.Parse(customerId));
+            var update = Builders<Customer>.Update.Set("address", address);
+            var options = new FindOneAndUpdateOptions<Customer> {ReturnDocument = ReturnDocument.After};
+            
+            var updatedCustomer = await _customerCollection.FindOneAndUpdateAsync(filter, update, options);
+
+            return updatedCustomer.Address;
+        }
+
+        public Task<string> UpdateCustomerMail(string customerId, string mail)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<Customer> UpdateCustomerMail(string mail)
+        public Task<string> UpdateCustomerName(string customerId, string name)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<Customer> UpdateCustomerName(string name)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<Customer> UpdateCustomerStatus(CustomerStatus status)
+        public Task<CustomerStatus> UpdateCustomerStatus(string customerId, CustomerStatus status)
         {
             throw new System.NotImplementedException();
         }

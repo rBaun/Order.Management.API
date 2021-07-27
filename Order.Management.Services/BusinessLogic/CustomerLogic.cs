@@ -36,10 +36,21 @@ namespace OrderManagement.Services.BusinessLogic
                                               || string.IsNullOrWhiteSpace(customer.LastName))
                 return false;
 
-            if (customer.Address?.Length < 3 || string.IsNullOrWhiteSpace(customer.Address))
+            if (!HasValidAddress(customer.Address))
                 return false;
 
             if (customer.Mail?.Length < 3 || string.IsNullOrWhiteSpace(customer.Mail))
+                return false;
+
+            return true;
+        }
+
+        public bool HasValidAddress(string address)
+        {
+            if (string.IsNullOrWhiteSpace(address))
+                return false;
+
+            if (address.Length < 3)
                 return false;
 
             return true;
