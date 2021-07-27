@@ -94,9 +94,15 @@ namespace OrderManagement.Persistence.Repositories
             return updatedCustomer.Address;
         }
 
-        public Task<string> UpdateCustomerMail(string customerId, string mail)
+        public async Task<string> UpdateCustomerMail(string customerId, string mail)
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("_id", ObjectId.Parse(customerId));
+            var update = Builders<Customer>.Update.Set("mail", mail);
+            var options = new FindOneAndUpdateOptions<Customer> {ReturnDocument = ReturnDocument.After};
+
+            var updatedCustomer = await _customerCollection.FindOneAndUpdateAsync(filter, update, options);
+
+            return updatedCustomer.Mail;
         }
 
         public Task<string> UpdateCustomerName(string customerId, string name)

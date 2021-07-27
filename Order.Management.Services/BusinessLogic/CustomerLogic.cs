@@ -55,5 +55,18 @@ namespace OrderManagement.Services.BusinessLogic
 
             return true;
         }
+
+        public bool HasValidMail(string mail)
+        {
+            try
+            {
+                var mailAddress = new System.Net.Mail.MailAddress(mail);
+                return mailAddress.Address == mail;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

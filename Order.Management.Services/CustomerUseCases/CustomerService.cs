@@ -28,8 +28,9 @@ namespace OrderManagement.Services.CustomerUseCases
         private readonly IGetNoAccountCustomersUseCase _getNoAccountCustomers;
         private readonly IUpdateCustomerUseCase _updateCustomer;
         private readonly IUpdateCustomerAddressUseCase _updateCustomerAddress;
+        private readonly IUpdateCustomerMailUseCase _updateCustomerMail;
 
-        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers, IUpdateCustomerUseCase updateCustomer, IUpdateCustomerAddressUseCase updateCustomerAddress)
+        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers, IUpdateCustomerUseCase updateCustomer, IUpdateCustomerAddressUseCase updateCustomerAddress, IUpdateCustomerMailUseCase updateCustomerMail)
         {
             _createCreateCustomer = createCustomer;
             _getAllCustomers = allCustomers;
@@ -39,6 +40,7 @@ namespace OrderManagement.Services.CustomerUseCases
             _getNoAccountCustomers = noAccountCustomers;
             _updateCustomer = updateCustomer;
             _updateCustomerAddress = updateCustomerAddress;
+            _updateCustomerMail = updateCustomerMail;
         }
         #endregion
 
@@ -64,10 +66,8 @@ namespace OrderManagement.Services.CustomerUseCases
         public async Task<Response<string>> UpdateCustomerAddressOn(string customerId, string address)
             => await _updateCustomerAddress.Execute(customerId, address);
 
-        public Task<Response<string>> UpdateCustomerMailOn(string customerId, string mail)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Response<string>> UpdateCustomerMailOn(string customerId, string mail)
+            => await _updateCustomerMail.Execute(customerId, mail);
 
         public Task<Response<string>> UpdateCustomerNameOn(string customerId, string name)
         {

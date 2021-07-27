@@ -18,15 +18,15 @@ namespace OrderManagement.Services.CustomerUseCases.PATCH
             _customerLogic = customerLogic;
         }
 
-        public async Task<Response<string>> Execute(string customerId, string newAddress)
+        public async Task<Response<string>> Execute(string customerId, string address)
         {
-            var response = new Response<string>(newAddress);
+            var response = new Response<string>(address);
 
-            if(!_customerLogic.HasValidAddress(newAddress))
-                response.Errors.Add($"Address invalid: {newAddress}");
+            if(!_customerLogic.HasValidAddress(address))
+                response.Errors.Add($"Address invalid: {address}");
 
             if(!response.Errors.Any())
-                response.Data = await _customerRepository.UpdateCustomerAddress(customerId, newAddress);
+                response.Data = await _customerRepository.UpdateCustomerAddress(customerId, address);
 
             return response;
         }

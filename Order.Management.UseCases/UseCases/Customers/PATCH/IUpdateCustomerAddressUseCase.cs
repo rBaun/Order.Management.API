@@ -5,6 +5,6 @@ namespace OrderManagement.Application.UseCases.Customers.PATCH
 {
     public interface IUpdateCustomerAddressUseCase
     {
-        Task<Response<string>> Execute(string customerId, string newAddress);
+        Task<Response<string>> Execute(string customerId, string address);
     }
 }
