@@ -58,22 +58,22 @@ namespace OrderManagement.Services.CustomerUseCases
         public async Task<PagedResponse<List<Customer>>> GetNoAccountCustomers(PaginationFilter paginationFilter, string route)
             => await _getNoAccountCustomers.Execute(paginationFilter, route);
 
-        public Task<Response<Customer>> UpdateCustomerAddressOn(int customerId, string address)
+        public Task<Response<Customer>> UpdateCustomerAddressOn(string customerId, string address)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<Customer>> UpdateCustomerMailOn(int customerId, string mail)
+        public Task<Response<Customer>> UpdateCustomerMailOn(string customerId, string mail)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<Customer>> UpdateCustomerNameOn(int customerId, string name)
+        public Task<Response<Customer>> UpdateCustomerNameOn(string customerId, string name)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<Customer>> UpdateCustomerStatusOn(int customerId, CustomerStatus status)
+        public Task<Response<Customer>> UpdateCustomerStatusOn(string customerId, CustomerStatus status)
         {
             throw new NotImplementedException();
         }
@@ -81,12 +81,12 @@ namespace OrderManagement.Services.CustomerUseCases
         public async Task<Response<Customer>> UpdateCustomer(Customer customer)
             => await _updateCustomer.Execute(customer);
 
-        public Task<Response<int>> DeactivateCustomerOn(int customerId)
+        public Task<Response<int>> DeactivateCustomerOn(string customerId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<int>> DeleteCustomer(int customerId)
+        public Task<Response<int>> DeleteCustomer(string customerId)
         {
             throw new NotImplementedException();
         }

@@ -210,11 +210,11 @@ namespace OrderManagement.API.Controllers.v1
         #region PATCH Requests
         // PATCH: api/v1/customers/update/address
         [HttpPatch("update/address")]
-        public async Task<IActionResult> PatchCustomerAddress(int customerId, string address)
+        public async Task<IActionResult> PatchCustomerAddress(string customerId, string address)
         {
             Logger.LogInfo("Attempting to update customer address...");
 
-            if (customerId < 1)
+            if (string.IsNullOrWhiteSpace(customerId))
             {
                 Logger.LogError("Invalid customer id");
                 return BadRequest(customerId);
@@ -242,11 +242,11 @@ namespace OrderManagement.API.Controllers.v1
 
         // PATCH: api/v1/customers/update/mail
         [HttpPatch("update/mail")]
-        public async Task<IActionResult> PatchCustomerMail(int customerId, string mail)
+        public async Task<IActionResult> PatchCustomerMail(string customerId, string mail)
         {
             Logger.LogInfo("Attempting to update customer e-mail...");
 
-            if (customerId < 1)
+            if (string.IsNullOrWhiteSpace(customerId))
             {
                 Logger.LogError("Invalid customer id");
                 return BadRequest(customerId);
@@ -274,11 +274,11 @@ namespace OrderManagement.API.Controllers.v1
 
         // PATCH: api/v1/customers/update/name
         [HttpPatch("update/name")]
-        public async Task<IActionResult> PatchCustomerName(int customerId, string name)
+        public async Task<IActionResult> PatchCustomerName(string customerId, string name)
         {
             Logger.LogInfo("Attempting to update customer name...");
 
-            if (customerId < 1)
+            if (string.IsNullOrWhiteSpace(customerId))
             {
                 Logger.LogError("Invalid customer id");
                 return BadRequest(customerId);
@@ -306,11 +306,11 @@ namespace OrderManagement.API.Controllers.v1
 
         // PATCH: api/v1/customers/update/status
         [HttpPatch("update/status")]
-        public async Task<IActionResult> PatchCustomerStatus(int customerId, CustomerStatus customerStatus)
+        public async Task<IActionResult> PatchCustomerStatus(string customerId, CustomerStatus customerStatus)
         {
             Logger.LogInfo("Attempting to update customer status...");
 
-            if (customerId < 1)
+            if (string.IsNullOrWhiteSpace(customerId))
             {
                 Logger.LogError("Invalid customer id");
                 return BadRequest(customerId);
@@ -334,11 +334,11 @@ namespace OrderManagement.API.Controllers.v1
         #region DELETE Requests
         // DELETE: api/v1/customers
         [HttpDelete]
-        public async Task<IActionResult> DeleteCustomer(int customerId)
+        public async Task<IActionResult> DeleteCustomer(string customerId)
         {
             Logger.LogInfo("Attempting to delete customer...");
 
-            if (customerId < 1)
+            if (string.IsNullOrWhiteSpace(customerId))
             {
                 Logger.LogError("Invalid customer id");
                 return BadRequest(customerId);
