@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
@@ -24,9 +25,12 @@ namespace OrderManagement.Persistence.Repositories
             return entity;
         }
 
-        public Task<Product> GetEntityById(string id)
+        public async Task<Product> GetEntityById(string id)
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Product>.Filter.Eq("_id", ObjectId.Parse(id));
+            var product = await _productCollection.Find(filter).FirstOrDefaultAsync();
+
+            return product;
         }
 
         public async Task<List<Product>> GetEntities()
@@ -37,9 +41,14 @@ namespace OrderManagement.Persistence.Repositories
             return products;
         }
 
-        public Task<Product> UpdateEntity(Product entity)
+        public async Task<Product> UpdateEntity(Product entity)
         {
-            throw new System.NotImplementedException();
+            var options = new FindOneAndReplaceOptions<Product> {ReturnDocument = ReturnDocument.After};
+            var updatedProduct =
+                await _productCollection.FindOneAndReplaceAsync<Product>(
+                    product => product.ProductId == entity.ProductId, entity, options);
+
+            return updatedProduct;
         }
 
         public Task<Product> DeleteEntity(string id)
@@ -49,20 +58,34 @@ namespace OrderManagement.Persistence.Repositories
 
         public Task<List<Product>> GetTop10Products()
         {
+            // TODO: Reconsider making this an extension method instead.
+            // Fetch all product records and make the extension method do the logic behind it
             throw new System.NotImplementedException();
         }
 
-        public Task<Product> UpdateProductDescription(int productId, string description)
+        public async Task<string> UpdateProductDescription(string productId, string description)
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Product>.Filter.Eq("_id", ObjectId.Parse(productId));
+            var update = Builders<Product>.Update.Set("description", description);
+            var options = new FindOneAndUpdateOptions<Product> {ReturnDocument = ReturnDocument.After};
+
+            var updatedProduct = await _productCollection.FindOneAndUpdateAsync(filter, update, options);
+
+            return updatedProduct.Description;
         }
 
-        public Task<Product> UpdateProductName(int productId, string name)
+        public async Task<string> UpdateProductName(string productId, string name)
         {
-            throw new System.NotImplementedException();
+            var filter = Builders<Product>.Filter.Eq("_id", ObjectId.Parse(productId));
+            var update = Builders<Product>.Update.Set("title", name);
+            var options = new FindOneAndUpdateOptions<Product> {ReturnDocument = ReturnDocument.After};
+
+            var updatedProduct = await _productCollection.FindOneAndUpdateAsync(filter, update, options);
+
+            return updatedProduct.Title;
         }
 
-        public Task<Product> UpdateProductStatus(int productId, ProductStatus status)
+        public Task<ProductStatus> UpdateProductStatus(string productId, ProductStatus status)
         {
             throw new System.NotImplementedException();
         }

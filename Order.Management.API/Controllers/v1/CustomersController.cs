@@ -203,7 +203,7 @@ namespace OrderManagement.API.Controllers.v1
             }
             Logger.LogInfo("Customer updated successfully!");
 
-            return Ok(customer);
+            return Ok(response);
         }
         #endregion
 
@@ -332,8 +332,8 @@ namespace OrderManagement.API.Controllers.v1
         #endregion
 
         #region DELETE Requests
-        // DELETE: api/v1/customers
-        [HttpDelete]
+        // DELETE: api/v1/customers/{customerId}
+        [HttpDelete("{customerId}")]
         public async Task<IActionResult> DeleteCustomer(string customerId)
         {
             Logger.LogInfo("Attempting to delete customer...");

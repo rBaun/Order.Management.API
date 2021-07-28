@@ -8,8 +8,8 @@ namespace OrderManagement.Persistence.Interfaces
     public interface IProductRepository : IEntityRepository<Product>
     {
         Task<List<Product>> GetTop10Products();
-        Task<Product> UpdateProductDescription(int productId, string description);
-        Task<Product> UpdateProductName(int productId, string name);
-        Task<Product> UpdateProductStatus(int productId, ProductStatus status);
+        Task<string> UpdateProductDescription(string productId, string description);
+        Task<string> UpdateProductName(string productId, string name);
+        Task<ProductStatus> UpdateProductStatus(string productId, ProductStatus status);
     }
 }
