@@ -117,7 +117,7 @@ namespace OrderManagement.Services
 
             // PATCH
             services.AddTransient<IUpdateProductDescriptionUseCase, UpdateProductDescriptionUseCase>();
-            services.AddTransient<UpdateProductNameUseCase, UpdateProductNameUseCase>();
+            services.AddTransient<IUpdateProductNameUseCase, UpdateProductNameUseCase>();
             services.AddTransient<IUpdateProductStatusUseCase, UpdateProductStatusUseCase>();
 
             // POST
