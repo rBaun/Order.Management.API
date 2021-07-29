@@ -1,5 +1,4 @@
-﻿using System;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using OrderManagement.Domain.Enums;
 
@@ -24,8 +23,10 @@ namespace OrderManagement.Domain.Models
 
         //public string Brand { get; set; }
         [BsonElement("stock")] public int Stock { get; set; }
+
         //public string ImageUrl { get; set; }
         [BsonElement("isNew")] public bool IsNew { get; set; }
+
         //public DateTime CreatedOn { get; set; }
         //public DateTime RestockedOn { get; set; }
         [BsonElement("productStatus")] public ProductStatus ProductStatus { get; set; }

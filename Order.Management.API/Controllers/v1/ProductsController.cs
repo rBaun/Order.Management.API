@@ -2,12 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NLog.Fluent;
 using OrderManagement.Application.Extensions.Interfaces;
 using OrderManagement.Application.Services;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
-using OrderManagement.Domain.Wrappers.Common;
 using OrderManagement.Domain.Wrappers.Pagination;
 
 namespace OrderManagement.API.Controllers.v1
@@ -23,6 +21,7 @@ namespace OrderManagement.API.Controllers.v1
         }
 
         #region POST Requests
+
         // POST: api/v1/products/add
         [HttpPost("add")]
         public async Task<IActionResult> CreateProduct([FromQuery] Product product)
@@ -41,13 +40,78 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Product created Successfully!");
 
             return Created($"api/v1/products/{response.Data.ProductId}", response);
         }
+
+        #endregion
+
+        #region PUT Requests
+
+        // PUT: api/v1/products
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct([FromQuery] Product product)
+        {
+            Logger.LogInfo("Attempting to update product...");
+
+            if (string.IsNullOrWhiteSpace(product.ProductId))
+            {
+                Logger.LogError("Invalid product id");
+                return BadRequest(product);
+            }
+
+            var response = await _productService.UpdateProduct(product);
+
+            if (response.Errors.Any())
+            {
+                Logger.LogError("Product not updated");
+                response.Message = "Product not updated. Check the errors and try again";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
+
+            Logger.LogInfo("Product updated successfully!");
+
+            return Ok(response);
+        }
+
+        #endregion
+
+        #region DELETE Requests
+
+        // DELETE: api/v1/products/{productId}
+        [HttpDelete]
+        public async Task<IActionResult> RemoveProduct(string productId)
+        {
+            Logger.LogInfo("Attempting to delete product...");
+
+            if (string.IsNullOrWhiteSpace(productId))
+            {
+                Logger.LogError("Invalid product id");
+                return BadRequest(productId);
+            }
+
+            var response = await _productService.DeleteProduct(productId);
+
+            if (response.Errors.Any())
+            {
+                Logger.LogError("Something went wrong");
+                response.Message = "Product not removed. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
+
+            Logger.LogInfo("Product deleted successfully!");
+
+            return Ok(response);
+        }
+
         #endregion
 
         #region GET Requests
+
         // GET: api/v1/products/{productId}
         [HttpGet("{productId}")]
         public async Task<IActionResult> GetProductById(string productId)
@@ -68,6 +132,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return NotFound(response);
             }
+
             Logger.LogInfo("Product found!");
 
             return Ok(response);
@@ -94,6 +159,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Products found!");
 
             return Ok(response);
@@ -120,41 +186,16 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Popular products found!");
 
             return Ok(response);
         }
-        #endregion
 
-        #region PUT Requests
-        // PUT: api/v1/products
-        [HttpPut]
-        public async Task<IActionResult> UpdateProduct([FromQuery] Product product)
-        {
-            Logger.LogInfo("Attempting to update product...");
-
-            if (string.IsNullOrWhiteSpace(product.ProductId))
-            {
-                Logger.LogError("Invalid product id");
-                return BadRequest(product);
-            }
-
-            var response = await _productService.UpdateProduct(product);
-
-            if (response.Errors.Any())
-            {
-                Logger.LogError("Product not updated");
-                response.Message = "Product not updated. Check the errors and try again";
-                response.Succeeded = false;
-                return StatusCode(StatusCodes.Status500InternalServerError, response);
-            }
-            Logger.LogInfo("Product updated successfully!");
-
-            return Ok(response);
-        }
         #endregion
 
         #region PATCH Requests
+
         // PATCH: api/v1/products/update/description
         [HttpPatch("update/description")]
         public async Task<IActionResult> UpdateProductDescription(string productId, string description)
@@ -176,6 +217,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Product Description updated successfully!");
 
             return Ok(response);
@@ -208,6 +250,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Product Title updated successfully!");
 
             return Ok(response);
@@ -234,38 +277,12 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Product Status updated successfully!");
 
             return Ok(response);
         }
-        #endregion
 
-        #region DELETE Requests
-        // DELETE: api/v1/products/{productId}
-        [HttpDelete]
-        public async Task<IActionResult> RemoveProduct(string productId)
-        {
-            Logger.LogInfo("Attempting to delete product...");
-
-            if (string.IsNullOrWhiteSpace(productId))
-            {
-                Logger.LogError("Invalid product id");
-                return BadRequest(productId);
-            }
-
-            var response = await _productService.DeleteProduct(productId);
-
-            if (response.Errors.Any())
-            {
-                Logger.LogError("Something went wrong");
-                response.Message = "Product not removed. Check the errors and try again.";
-                response.Succeeded = false;
-                return StatusCode(StatusCodes.Status500InternalServerError, response);
-            }
-            Logger.LogInfo("Product deleted successfully!");
-
-            return Ok(response);
-        }
         #endregion
     }
 }

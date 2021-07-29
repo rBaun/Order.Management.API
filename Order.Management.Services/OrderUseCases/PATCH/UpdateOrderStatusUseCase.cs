@@ -4,6 +4,5 @@ namespace OrderManagement.Services.OrderUseCases.PATCH
 {
     public class UpdateOrderStatusUseCase : IUpdateOrderStatusUseCase
     {
-
     }
 }

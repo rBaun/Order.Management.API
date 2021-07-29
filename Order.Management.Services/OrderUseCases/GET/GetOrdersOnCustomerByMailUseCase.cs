@@ -4,6 +4,5 @@ namespace OrderManagement.Services.OrderUseCases.GET
 {
     public class GetOrdersOnCustomerByMailUseCase : IGetOrdersOnCustomerByMailUseCase
     {
-
     }
 }

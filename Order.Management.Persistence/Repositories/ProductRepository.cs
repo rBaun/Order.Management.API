@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -53,14 +54,14 @@ namespace OrderManagement.Persistence.Repositories
 
         public Task<Product> DeleteEntity(string id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<List<Product>> GetTop10Products()
         {
             // TODO: Reconsider making this an extension method instead.
             // Fetch all product records and make the extension method do the logic behind it
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task<string> UpdateProductDescription(string productId, string description)
@@ -87,7 +88,7 @@ namespace OrderManagement.Persistence.Repositories
 
         public Task<ProductStatus> UpdateProductStatus(string productId, ProductStatus status)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

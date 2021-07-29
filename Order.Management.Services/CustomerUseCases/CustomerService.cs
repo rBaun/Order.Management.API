@@ -13,10 +13,6 @@ using OrderManagement.Domain.Wrappers.Pagination;
 
 namespace OrderManagement.Services.CustomerUseCases
 {
-    /**
-     * This is a filler class utilized to make the controller easier to read and maintain.
-     * The sole purpose of this class is to avoid dependency injecting all the use cases in the customer controller
-     */
     public class CustomerService : ICustomerService
     {
         #region Dependency Injection
@@ -30,7 +26,11 @@ namespace OrderManagement.Services.CustomerUseCases
         private readonly IUpdateCustomerAddressUseCase _updateCustomerAddress;
         private readonly IUpdateCustomerMailUseCase _updateCustomerMail;
 
-        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers, IUpdateCustomerUseCase updateCustomer, IUpdateCustomerAddressUseCase updateCustomerAddress, IUpdateCustomerMailUseCase updateCustomerMail)
+        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers,
+            IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers,
+            IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers,
+            IUpdateCustomerUseCase updateCustomer, IUpdateCustomerAddressUseCase updateCustomerAddress,
+            IUpdateCustomerMailUseCase updateCustomerMail)
         {
             _createCreateCustomer = createCustomer;
             _getAllCustomers = allCustomers;
@@ -42,9 +42,9 @@ namespace OrderManagement.Services.CustomerUseCases
             _updateCustomerAddress = updateCustomerAddress;
             _updateCustomerMail = updateCustomerMail;
         }
+
         #endregion
 
-        #region Use Cases
         public async Task<Response<Customer>> CreateCustomer(Customer customer) 
             => await _createCreateCustomer.Execute(customer);
 
@@ -91,6 +91,5 @@ namespace OrderManagement.Services.CustomerUseCases
         {
             throw new NotImplementedException();
         }
-        #endregion
     }
 }

@@ -5,7 +5,7 @@ namespace OrderManagement.Application.Extensions
 {
     public class LoggerManager : ILoggerManager
     {
-        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public void LogInfo(string message)
         {

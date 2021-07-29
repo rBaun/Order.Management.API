@@ -10,8 +10,8 @@ namespace OrderManagement.Services.CustomerUseCases.PUT
 {
     public class UpdateCustomerUseCase : IUpdateCustomerUseCase
     {
-        private readonly ICustomerRepository _customerRepository;
         private readonly ICustomerLogic _customerLogic;
+        private readonly ICustomerRepository _customerRepository;
 
         public UpdateCustomerUseCase(ICustomerRepository customerRepository, ICustomerLogic customerLogic)
         {

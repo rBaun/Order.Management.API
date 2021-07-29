@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using OrderManagement.Application.UseCases.Products.PATCH;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Wrappers.Common;
@@ -9,8 +10,8 @@ namespace OrderManagement.Services.ProductUseCases.PATCH
 {
     public class UpdateProductStatusUseCase : IUpdateProductStatusUseCase
     {
-        private readonly IProductRepository _productRepository;
         private readonly IProductLogic _productLogic;
+        private readonly IProductRepository _productRepository;
 
         public UpdateProductStatusUseCase(IProductRepository productRepository, IProductLogic productLogic)
         {
@@ -20,7 +21,7 @@ namespace OrderManagement.Services.ProductUseCases.PATCH
 
         public Task<Response<ProductStatus>> Execute(string productId, ProductStatus productStatus)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

@@ -4,11 +4,6 @@ namespace OrderManagement.Domain.Wrappers.Common
 {
     public class Response<T>
     {
-        public T Data { get; set; }
-        public bool Succeeded { get; set; }
-        public List<string> Errors { get; set; }
-        public string Message { get; set; }
-
         public Response()
         {
             Errors = new List<string>();
@@ -21,5 +16,10 @@ namespace OrderManagement.Domain.Wrappers.Common
             Errors = new List<string>();
             Message = string.Empty;
         }
+
+        public T Data { get; set; }
+        public bool Succeeded { get; set; }
+        public List<string> Errors { get; set; }
+        public string Message { get; set; }
     }
 }

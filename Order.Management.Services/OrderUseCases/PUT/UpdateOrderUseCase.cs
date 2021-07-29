@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using OrderManagement.Application.UseCases.Orders.PUT;
 using OrderManagement.Domain.Models;
 
@@ -8,7 +9,7 @@ namespace OrderManagement.Services.OrderUseCases.PUT
     {
         Task<Order> IUpdateOrderUseCase.Execute(Order order)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

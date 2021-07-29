@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using OrderManagement.Domain.Models;
 
 namespace OrderManagement.Persistence.Collections
@@ -12,7 +7,8 @@ namespace OrderManagement.Persistence.Collections
     {
         public static IMongoCollection<Product> Open()
         {
-            var settings = MongoClientSettings.FromConnectionString("mongodb+srv://admin:admin@cluster0.aj7ss.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+            var settings = MongoClientSettings.FromConnectionString(
+                "mongodb+srv://admin:admin@cluster0.aj7ss.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
             var client = new MongoClient(settings);
             var database = client.GetDatabase("OrderManagement");
 

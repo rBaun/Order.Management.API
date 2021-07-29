@@ -9,8 +9,8 @@ namespace OrderManagement.Services.CustomerUseCases.PATCH
 {
     public class UpdateCustomerMailUseCase : IUpdateCustomerMailUseCase
     {
-        private readonly ICustomerRepository _customerRepository;
         private readonly ICustomerLogic _customerLogic;
+        private readonly ICustomerRepository _customerRepository;
 
         public UpdateCustomerMailUseCase(ICustomerRepository customerRepository, ICustomerLogic customerLogic)
         {
@@ -23,10 +23,10 @@ namespace OrderManagement.Services.CustomerUseCases.PATCH
             var response = new Response<string>(mail);
             var customers = await _customerRepository.GetEntities();
 
-            if(_customerLogic.HasExistingMail(mail, customers))
+            if (_customerLogic.HasExistingMail(mail, customers))
                 response.Errors.Add($"Invalid mail: {mail}");
 
-            if(!_customerLogic.HasValidMail(mail))
+            if (!_customerLogic.HasValidMail(mail))
                 response.Errors.Add($"Invalid mail format: {mail}");
 
             if (!response.Errors.Any())

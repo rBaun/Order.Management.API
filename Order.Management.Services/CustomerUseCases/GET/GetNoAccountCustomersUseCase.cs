@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using OrderManagement.Application.UseCases.Customers.GET;
 using OrderManagement.Domain.Helpers;
@@ -20,6 +19,7 @@ namespace OrderManagement.Services.CustomerUseCases.GET
             _customerRepository = customerRepository;
             _uriGenerator = uriGenerator;
         }
+
         public async Task<PagedResponse<List<Customer>>> Execute(PaginationFilter paginationFilter, string route)
         {
             var noAccountCustomers = await _customerRepository.GetNoAccountCustomers();

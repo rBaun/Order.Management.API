@@ -6,11 +6,6 @@
         private const int DefaultPageSize = 10;
         private const int PageSizeCap = 50;
 
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-        public string SearchTerm { get; set; }
-        public string OrderBy { get; set; }
-
         public PaginationFilter()
         {
             PageNumber = DefaultPageNumber;
@@ -30,6 +25,11 @@
             SearchTerm = searchTerm;
             OrderBy = orderBy;
         }
+
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+        public string SearchTerm { get; set; }
+        public string OrderBy { get; set; }
 
         private static int SetPageNumber(int pageNumber)
         {

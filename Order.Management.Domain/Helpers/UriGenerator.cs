@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using OrderManagement.Domain.Wrappers.Pagination;
 using Microsoft.AspNetCore.WebUtilities;
+using OrderManagement.Domain.Wrappers.Pagination;
 
 namespace OrderManagement.Domain.Helpers
 {
@@ -9,7 +9,7 @@ namespace OrderManagement.Domain.Helpers
     {
         Uri GetPageUri(PaginationFilter paginationFilter, string route);
     }
-    
+
     public class UriGenerator : IUriGenerator
     {
         private readonly string _baseUri;

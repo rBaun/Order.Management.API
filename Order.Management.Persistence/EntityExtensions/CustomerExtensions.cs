@@ -27,7 +27,7 @@ namespace OrderManagement.Persistence.EntityExtensions
                 "firstName" => customers.OrderBy(customer => customer.FirstName).ToList(),
                 "mail" => customers.OrderBy(customer => customer.Mail).ToList(),
                 "phone" => customers.OrderBy(customer => customer.Phone).ToList(),
-                _ => customers.OrderBy(customer => customer.LastName).ToList(),
+                _ => customers.OrderBy(customer => customer.LastName).ToList()
             };
         }
 
@@ -35,11 +35,12 @@ namespace OrderManagement.Persistence.EntityExtensions
             PaginationFilter validatedFilter, IUriGenerator uriGenerator, string route)
         {
             return PaginationHelper.CreatePagedResponse(pagedCustomers
-                .Search(validatedFilter.SearchTerm)
-                .Sort(validatedFilter.OrderBy)
-                .Skip((validatedFilter.PageNumber - 1) * validatedFilter.PageSize)
-                .Take(validatedFilter.PageSize)
-                .ToList(), validatedFilter, pagedCustomers.Search(validatedFilter.SearchTerm).Count, uriGenerator, route);
+                    .Search(validatedFilter.SearchTerm)
+                    .Sort(validatedFilter.OrderBy)
+                    .Skip((validatedFilter.PageNumber - 1) * validatedFilter.PageSize)
+                    .Take(validatedFilter.PageSize)
+                    .ToList(), validatedFilter, pagedCustomers.Search(validatedFilter.SearchTerm).Count, uriGenerator,
+                route);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace OrderManagement.Services.ProductUseCases.PATCH
 {
     public class UpdateProductNameUseCase : IUpdateProductNameUseCase
     {
-        private readonly IProductRepository _productRepository;
         private readonly IProductLogic _productLogic;
+        private readonly IProductRepository _productRepository;
 
         public UpdateProductNameUseCase(IProductRepository productRepository, IProductLogic productLogic)
         {
@@ -23,10 +23,10 @@ namespace OrderManagement.Services.ProductUseCases.PATCH
             var response = new Response<string>(name);
             var products = await _productRepository.GetEntities();
 
-            if(_productLogic.HasExistingProductName(name, products))
+            if (_productLogic.HasExistingProductName(name, products))
                 response.Errors.Add($"Product already exists: {name}");
 
-            if(!_productLogic.HasValidName(name))
+            if (!_productLogic.HasValidName(name))
                 response.Errors.Add($"Invalid product name: {name}");
 
             if (!response.Errors.Any())

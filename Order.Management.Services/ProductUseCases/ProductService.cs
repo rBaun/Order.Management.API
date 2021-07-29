@@ -25,7 +25,10 @@ namespace OrderManagement.Services.ProductUseCases
         private readonly IUpdateProductStatusUseCase _updateProductStatus;
         private readonly IUpdateProductUseCase _updateProduct;
 
-        public ProductService(ICreateProductUseCase product, IGetAllProductsUseCase products, IGetProductByIdUseCase productById, IGetTop10ProductsUseCase top10Products, IUpdateProductDescriptionUseCase updateProductDescription, IUpdateProductNameUseCase updateProductName, IUpdateProductStatusUseCase updateProductStatus, IUpdateProductUseCase updateProduct)
+        public ProductService(ICreateProductUseCase product, IGetAllProductsUseCase products,
+            IGetProductByIdUseCase productById, IGetTop10ProductsUseCase top10Products,
+            IUpdateProductDescriptionUseCase updateProductDescription, IUpdateProductNameUseCase updateProductName,
+            IUpdateProductStatusUseCase updateProductStatus, IUpdateProductUseCase updateProduct)
         {
             _createProduct = product;
             _getProducts = products;
@@ -36,6 +39,7 @@ namespace OrderManagement.Services.ProductUseCases
             _updateProductStatus = updateProductStatus;
             _updateProduct = updateProduct;
         }
+
         #endregion
 
         public async Task<Response<Product>> CreateProduct(Product product)

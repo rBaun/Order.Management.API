@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using OrderManagement.Domain.Models;
-using OrderManagement.Domain.Wrappers.Common;
 using OrderManagement.Domain.Wrappers.Pagination;
 
 namespace OrderManagement.Application.UseCases.Customers.GET

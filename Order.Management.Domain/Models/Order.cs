@@ -6,6 +6,11 @@ namespace OrderManagement.Domain.Models
 {
     public class Order
     {
+        public Order()
+        {
+            OrderLines = new List<OrderLine>();
+        }
+
         public int OrderId { get; set; }
 
         public DateTime PlacedOn { get; set; }
@@ -19,10 +24,5 @@ namespace OrderManagement.Domain.Models
 
         public double TotalPrice { get; set; }
         public OrderStatus OrderStatus { get; set; }
-
-        public Order()
-        {
-            OrderLines = new List<OrderLine>();
-        }
     }
 }

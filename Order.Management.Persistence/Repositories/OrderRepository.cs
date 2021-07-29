@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using OrderManagement.Domain.Enums;
 using OrderManagement.Domain.Models;
@@ -10,62 +11,62 @@ namespace OrderManagement.Persistence.Repositories
     {
         public List<Order> GetCustomerOrders(string mail)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public List<Order> GetPlacedOrders()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public List<Order> GetProcessingOrders()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public List<Order> GetShippedOrders()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Order UpdateOrderCustomerDetails(Customer customer)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Order UpdateOrderOrderLines(List<OrderLine> orderLines)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Order UpdateOrderStatus(OrderStatus status)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<Order> CreateEntity(Order entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<Order> GetEntityById(string id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<List<Order>> GetEntities()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<Order> UpdateEntity(Order entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<Order> DeleteEntity(string id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

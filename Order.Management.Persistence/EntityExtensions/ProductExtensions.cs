@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OrderManagement.Domain.Helpers;
 using OrderManagement.Domain.Models;
 using OrderManagement.Domain.Wrappers.Pagination;
@@ -37,11 +34,12 @@ namespace OrderManagement.Persistence.EntityExtensions
             PaginationFilter validatedFilter, IUriGenerator uriGenerator, string route)
         {
             return PaginationHelper.CreatePagedResponse(pagedProducts
-                .Search(validatedFilter.SearchTerm)
-                .Sort(validatedFilter.OrderBy)
-                .Skip((validatedFilter.PageNumber - 1) * validatedFilter.PageSize)
-                .Take(validatedFilter.PageSize)
-                .ToList(), validatedFilter, pagedProducts.Search(validatedFilter.SearchTerm).Count, uriGenerator, route);
+                    .Search(validatedFilter.SearchTerm)
+                    .Sort(validatedFilter.OrderBy)
+                    .Skip((validatedFilter.PageNumber - 1) * validatedFilter.PageSize)
+                    .Take(validatedFilter.PageSize)
+                    .ToList(), validatedFilter, pagedProducts.Search(validatedFilter.SearchTerm).Count, uriGenerator,
+                route);
         }
     }
 }

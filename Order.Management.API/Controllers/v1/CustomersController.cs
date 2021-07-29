@@ -21,6 +21,7 @@ namespace OrderManagement.API.Controllers.v1
         }
 
         #region POST Requests
+
         // POST: api/v1/customers/add
         [HttpPost("add")]
         public async Task<IActionResult> CreateCustomer([FromQuery] Customer customer)
@@ -39,14 +40,79 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Customer created successfully!");
 
 
             return Created($"api/v1/customers/{response.Data.CustomerId}", response);
         }
+
+        #endregion
+
+        #region PUT Requests
+
+        // PUT: api/v1/customers
+        [HttpPut]
+        public async Task<IActionResult> UpdateCustomer([FromQuery] Customer customer)
+        {
+            Logger.LogInfo("Attempting to update customer...");
+
+            if (string.IsNullOrWhiteSpace(customer.CustomerId))
+            {
+                Logger.LogError("Invalid customer id");
+                return BadRequest(customer);
+            }
+
+            var response = await _customerService.UpdateCustomer(customer);
+
+            if (response.Errors.Any())
+            {
+                Logger.LogError("Customer not updated");
+                response.Message = "Customer not updated. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
+
+            Logger.LogInfo("Customer updated successfully!");
+
+            return Ok(response);
+        }
+
+        #endregion
+
+        #region DELETE Requests
+
+        // DELETE: api/v1/customers/{customerId}
+        [HttpDelete("{customerId}")]
+        public async Task<IActionResult> DeleteCustomer(string customerId)
+        {
+            Logger.LogInfo("Attempting to delete customer...");
+
+            if (string.IsNullOrWhiteSpace(customerId))
+            {
+                Logger.LogError("Invalid customer id");
+                return BadRequest(customerId);
+            }
+
+            var response = await _customerService.DeleteCustomer(customerId);
+
+            if (response.Errors.Any())
+            {
+                Logger.LogError("Customer not deleted");
+                response.Message = "Customer not removed. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
+
+            Logger.LogInfo("Customer deleted successfully!");
+
+            return Ok(response);
+        }
+
         #endregion
 
         #region GET Requests
+
         // GET: api/v1/customers/{customerId}
         [HttpGet("{customerId}")]
         public async Task<IActionResult> GetCustomerById([FromRoute] string customerId)
@@ -68,6 +134,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return NotFound(response);
             }
+
             Logger.LogInfo("Customer found!");
 
 
@@ -95,6 +162,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Customers found!");
 
             return Ok(response);
@@ -121,6 +189,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Customers found!");
 
             return Ok(response);
@@ -147,6 +216,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Customers found!");
 
             return Ok(response);
@@ -173,41 +243,16 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Customers found!");
 
             return Ok(response);
         }
-        #endregion
 
-        #region PUT Requests
-        // PUT: api/v1/customers
-        [HttpPut]
-        public async Task<IActionResult> UpdateCustomer([FromQuery] Customer customer)
-        {
-            Logger.LogInfo("Attempting to update customer...");
-
-            if (string.IsNullOrWhiteSpace(customer.CustomerId))
-            {
-                Logger.LogError("Invalid customer id");
-                return BadRequest(customer);
-            }
-
-            var response = await _customerService.UpdateCustomer(customer);
-
-            if (response.Errors.Any())
-            {
-                Logger.LogError("Customer not updated");
-                response.Message = "Customer not updated. Check the errors and try again.";
-                response.Succeeded = false;
-                return StatusCode(StatusCodes.Status500InternalServerError, response);
-            }
-            Logger.LogInfo("Customer updated successfully!");
-
-            return Ok(response);
-        }
         #endregion
 
         #region PATCH Requests
+
         // PATCH: api/v1/customers/update/address
         [HttpPatch("update/address")]
         public async Task<IActionResult> PatchCustomerAddress(string customerId, string address)
@@ -235,6 +280,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Address updated successfully!");
 
             return Ok(response);
@@ -267,6 +313,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Mail updated successfully!");
 
             return Ok(response);
@@ -299,6 +346,7 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Name updated successfully!");
 
             return Ok(response);
@@ -325,38 +373,12 @@ namespace OrderManagement.API.Controllers.v1
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
+
             Logger.LogInfo("Customer status updated successfully!");
 
             return Ok(response);
         }
-        #endregion
 
-        #region DELETE Requests
-        // DELETE: api/v1/customers/{customerId}
-        [HttpDelete("{customerId}")]
-        public async Task<IActionResult> DeleteCustomer(string customerId)
-        {
-            Logger.LogInfo("Attempting to delete customer...");
-
-            if (string.IsNullOrWhiteSpace(customerId))
-            {
-                Logger.LogError("Invalid customer id");
-                return BadRequest(customerId);
-            }
-
-            var response = await _customerService.DeleteCustomer(customerId);
-
-            if (response.Errors.Any())
-            {
-                Logger.LogError("Customer not deleted");
-                response.Message = "Customer not removed. Check the errors and try again.";
-                response.Succeeded = false;
-                return StatusCode(StatusCodes.Status500InternalServerError, response);
-            }
-            Logger.LogInfo("Customer deleted successfully!");
-
-            return Ok(response);
-        }
         #endregion
     }
 }

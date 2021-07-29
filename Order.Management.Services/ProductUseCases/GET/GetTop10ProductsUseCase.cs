@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using OrderManagement.Application.UseCases.Products.GET;
 using OrderManagement.Domain.Models;
@@ -18,7 +19,7 @@ namespace OrderManagement.Services.ProductUseCases.GET
 
         public Task<Response<List<Product>>> Execute()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

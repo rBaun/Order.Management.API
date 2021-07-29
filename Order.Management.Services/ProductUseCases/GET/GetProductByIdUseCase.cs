@@ -20,7 +20,7 @@ namespace OrderManagement.Services.ProductUseCases.GET
             var product = await _productRepository.GetEntityById(productId);
             var response = new Response<Product>(product);
 
-            if(response.Data == null)
+            if (response.Data == null)
                 response.Errors.Add($"Found no customer with id of '{productId}'");
 
             return response;

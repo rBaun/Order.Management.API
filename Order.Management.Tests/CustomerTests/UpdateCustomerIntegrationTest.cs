@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OrderManagement.Domain.Models;
 using OrderManagement.Services.CustomerUseCases.PUT;
 using OrderManagement.Tests.Mocks;
@@ -12,11 +9,6 @@ namespace OrderManagement.Tests.CustomerTests
 {
     public class UpdateCustomerIntegrationTest : IDisposable
     {
-        public Customer OldCustomer { get; set; }
-        public Customer NewValidCustomer { get; set; }
-        public Customer NewInvalidCustomer { get; set; }
-        public List<Customer> Customers { get; set; }
-
         public UpdateCustomerIntegrationTest()
         {
             OldCustomer = new Customer
@@ -51,8 +43,12 @@ namespace OrderManagement.Tests.CustomerTests
 
         public void Dispose()
         {
-            
         }
+
+        public Customer OldCustomer { get; set; }
+        public Customer NewValidCustomer { get; set; }
+        public Customer NewInvalidCustomer { get; set; }
+        public List<Customer> Customers { get; set; }
 
         [Fact(DisplayName = "INTEGRATION: Update Customer - Valid Input")]
         public void UpdateExistingCustomer_InputsAllNewInformation_ShouldReturnUpdatedCustomer()
@@ -67,7 +63,8 @@ namespace OrderManagement.Tests.CustomerTests
                 .MockHasExistingPhoneFalse(NewValidCustomer.Phone, Customers)
                 .MockHasRequiredCustomerFieldsTrue(NewValidCustomer);
 
-            var updateCustomerUseCase = new UpdateCustomerUseCase(mockCustomerRepository.Object, mockCustomerLogic.Object);
+            var updateCustomerUseCase =
+                new UpdateCustomerUseCase(mockCustomerRepository.Object, mockCustomerLogic.Object);
 
             // Act
             var result = updateCustomerUseCase.Execute(NewValidCustomer).Result;
@@ -89,7 +86,8 @@ namespace OrderManagement.Tests.CustomerTests
                 .MockHasExistingPhoneTrue(NewInvalidCustomer.Phone, Customers)
                 .MockHasRequiredCustomerFieldsTrue(NewInvalidCustomer);
 
-            var updateCustomerUseCase = new UpdateCustomerUseCase(mockCustomerRepository.Object, mockCustomerLogic.Object);
+            var updateCustomerUseCase =
+                new UpdateCustomerUseCase(mockCustomerRepository.Object, mockCustomerLogic.Object);
 
             // Act
             var result = updateCustomerUseCase.Execute(NewInvalidCustomer).Result;

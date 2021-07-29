@@ -9,8 +9,8 @@ namespace OrderManagement.Services.CustomerUseCases.PATCH
 {
     public class UpdateCustomerAddressUseCase : IUpdateCustomerAddressUseCase
     {
-        private readonly ICustomerRepository _customerRepository;
         private readonly ICustomerLogic _customerLogic;
+        private readonly ICustomerRepository _customerRepository;
 
         public UpdateCustomerAddressUseCase(ICustomerRepository customerRepository, ICustomerLogic customerLogic)
         {
@@ -22,10 +22,10 @@ namespace OrderManagement.Services.CustomerUseCases.PATCH
         {
             var response = new Response<string>(address);
 
-            if(!_customerLogic.HasValidAddress(address))
+            if (!_customerLogic.HasValidAddress(address))
                 response.Errors.Add($"Address invalid: {address}");
 
-            if(!response.Errors.Any())
+            if (!response.Errors.Any())
                 response.Data = await _customerRepository.UpdateCustomerAddress(customerId, address);
 
             return response;

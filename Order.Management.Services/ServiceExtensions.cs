@@ -100,7 +100,7 @@ namespace OrderManagement.Services
 
             // POST 
             services.AddTransient<ICreateOrderUseCase, CreateOrderUseCase>();
-            
+
             // PUT
             services.AddTransient<IUpdateOrderUseCase, UpdateOrderUseCase>();
         }

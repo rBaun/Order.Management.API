@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -56,7 +57,7 @@ namespace OrderManagement.Persistence.Repositories
 
         public Task<Customer> DeleteEntity(string id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task<List<Customer>> GetFirstTimeCustomers()
@@ -88,7 +89,7 @@ namespace OrderManagement.Persistence.Repositories
             var filter = Builders<Customer>.Filter.Eq("_id", ObjectId.Parse(customerId));
             var update = Builders<Customer>.Update.Set("address", address);
             var options = new FindOneAndUpdateOptions<Customer> {ReturnDocument = ReturnDocument.After};
-            
+
             var updatedCustomer = await _customerCollection.FindOneAndUpdateAsync(filter, update, options);
 
             return updatedCustomer.Address;
@@ -107,12 +108,12 @@ namespace OrderManagement.Persistence.Repositories
 
         public Task<string> UpdateCustomerName(string customerId, string name)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<CustomerStatus> UpdateCustomerStatus(string customerId, CustomerStatus status)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

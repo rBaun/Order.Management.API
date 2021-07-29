@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 using OrderManagement.Application.UseCases.Customers.GET;
 using OrderManagement.Domain.Helpers;
 using OrderManagement.Domain.Models;

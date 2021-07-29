@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Mail;
 using OrderManagement.Domain.Models;
 using OrderManagement.Persistence.Interfaces;
 using OrderManagement.Services.BusinessLogic.Interfaces;
@@ -20,20 +19,20 @@ namespace OrderManagement.Services.BusinessLogic
         public bool HasExistingMail(string email, List<Customer> customers)
         {
             return customers.Exists(customer =>
-                       string.Equals(customer.Mail, email, StringComparison.CurrentCultureIgnoreCase));
+                string.Equals(customer.Mail, email, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public bool HasExistingPhone(string phone, List<Customer> customers)
         {
             return customers.Exists(customer =>
-                       string.Equals(customer.Phone, phone, StringComparison.CurrentCultureIgnoreCase));
+                string.Equals(customer.Phone, phone, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public bool HasRequiredCustomerFields(Customer customer)
         {
-            if (customer.FirstName?.Length < 3 || string.IsNullOrWhiteSpace(customer.FirstName) 
-                                              || customer.LastName?.Length < 3 
-                                              || string.IsNullOrWhiteSpace(customer.LastName))
+            if (customer.FirstName?.Length < 3 || string.IsNullOrWhiteSpace(customer.FirstName)
+                                               || customer.LastName?.Length < 3
+                                               || string.IsNullOrWhiteSpace(customer.LastName))
                 return false;
 
             if (!HasValidAddress(customer.Address))
@@ -60,7 +59,7 @@ namespace OrderManagement.Services.BusinessLogic
         {
             try
             {
-                var mailAddress = new System.Net.Mail.MailAddress(mail);
+                var mailAddress = new MailAddress(mail);
                 return mailAddress.Address == mail;
             }
             catch

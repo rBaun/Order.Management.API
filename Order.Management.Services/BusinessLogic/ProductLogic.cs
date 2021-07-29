@@ -31,7 +31,7 @@ namespace OrderManagement.Services.BusinessLogic
         {
             if (string.IsNullOrWhiteSpace(name))
                 return false;
-            
+
             if (name.Length < 2)
                 return false;
 
@@ -51,8 +51,8 @@ namespace OrderManagement.Services.BusinessLogic
 
         public ProductStatus SetProductStockStatus(Product product)
         {
-            return product.Stock == 0 
-                ? ProductStatus.OutOfStock 
+            return product.Stock == 0
+                ? ProductStatus.OutOfStock
                 : ProductStatus.InStock;
         }
     }

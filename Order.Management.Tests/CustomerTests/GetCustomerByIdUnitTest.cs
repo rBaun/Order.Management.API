@@ -9,8 +9,6 @@ namespace OrderManagement.Tests.CustomerTests
 {
     public class GetCustomerByIdUnitTest : IDisposable
     {
-        public Customer ExistingCustomer { get; set; }
-
         public GetCustomerByIdUnitTest()
         {
             ExistingCustomer = new Customer
@@ -27,8 +25,9 @@ namespace OrderManagement.Tests.CustomerTests
 
         public void Dispose()
         {
-            
         }
+
+        public Customer ExistingCustomer { get; set; }
 
         [Fact(DisplayName = "UNIT: Get Customer By Id - Valid Input")]
         public void GetCustomerById_InputsExistingId_ShouldReturnFoundCustomer()
