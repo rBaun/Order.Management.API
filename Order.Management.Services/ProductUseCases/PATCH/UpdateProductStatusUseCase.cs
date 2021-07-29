@@ -19,9 +19,14 @@ namespace OrderManagement.Services.ProductUseCases.PATCH
             _productLogic = productLogic;
         }
 
-        public Task<Response<ProductStatus>> Execute(string productId, ProductStatus productStatus)
+        public async Task<Response<ProductStatus>> Execute(string productId, ProductStatus productStatus)
         {
-            throw new NotImplementedException();
+            var response = new Response<ProductStatus>(productStatus)
+            {
+                Data = await _productRepository.UpdateProductStatus(productId, productStatus)
+            };
+
+            return response;
         }
     }
 }
