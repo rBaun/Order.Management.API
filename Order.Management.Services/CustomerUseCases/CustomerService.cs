@@ -99,6 +99,5 @@ namespace OrderManagement.Services.CustomerUseCases
 
         public async Task<Response<Customer>> DeleteCustomer(string customerId)
             => await _deleteCustomer.Execute(customerId);
-        #endregion
     }
 }

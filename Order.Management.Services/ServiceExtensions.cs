@@ -71,6 +71,7 @@ namespace OrderManagement.Services
             services.AddTransient<IUpdateCustomerAddressUseCase, UpdateCustomerAddressUseCase>();
             services.AddTransient<IUpdateCustomerMailUseCase, UpdateCustomerMailUseCase>();
             services.AddTransient<IUpdateCustomerFirstNameUseCase, UpdateCustomerFirstNameUseCase>();
+            services.AddTransient<IUpdateCustomerLastNameUseCase, UpdateCustomerLastNameUseCase>();
             services.AddTransient<IUpdateCustomerStatusUseCase, UpdateCustomerStatusUseCase>();
 
             // POST

@@ -128,7 +128,7 @@ namespace OrderManagement.API.Controllers.v1
             if (response.Errors.Any())
             {
                 Logger.LogWarn("Product not found");
-                response.Message = "Customer not found. Check the errors and try again";
+                response.Message = "Product not found. Check the errors and try again";
                 response.Succeeded = false;
                 return NotFound(response);
             }

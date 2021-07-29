@@ -21,7 +21,7 @@ namespace OrderManagement.Services.ProductUseCases.GET
             var response = new Response<Product>(product);
 
             if (response.Data == null)
-                response.Errors.Add($"Found no customer with id of '{productId}'");
+                response.Errors.Add($"Found no product with id of '{productId}'");
 
             return response;
         }
