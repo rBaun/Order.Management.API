@@ -52,9 +52,12 @@ namespace OrderManagement.Persistence.Repositories
             return updatedProduct;
         }
 
-        public Task<Product> DeleteEntity(string id)
+        public async Task<Product> DeleteEntity(string id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Product>.Filter.Eq("_id", ObjectId.Parse(id));
+            var deletedProduct = await _productCollection.FindOneAndDeleteAsync(filter);
+
+            return deletedProduct;
         }
 
         public Task<List<Product>> GetTop10Products()
@@ -86,9 +89,15 @@ namespace OrderManagement.Persistence.Repositories
             return updatedProduct.Title;
         }
 
-        public Task<ProductStatus> UpdateProductStatus(string productId, ProductStatus status)
+        public async Task<ProductStatus> UpdateProductStatus(string productId, ProductStatus status)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Product>.Filter.Eq("_id", ObjectId.Parse(productId));
+            var update = Builders<Product>.Update.Set("productStatus", status);
+            var options = new FindOneAndUpdateOptions<Product> {ReturnDocument = ReturnDocument.After};
+
+            var updatedProduct = await _productCollection.FindOneAndUpdateAsync(filter, update, options);
+
+            return updatedProduct.ProductStatus;
         }
     }
 }
