@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using OrderManagement.Application.Services;
+using OrderManagement.Application.UseCases.Customers.DELETE;
 using OrderManagement.Application.UseCases.Customers.GET;
 using OrderManagement.Application.UseCases.Customers.PATCH;
 using OrderManagement.Application.UseCases.Customers.POST;
@@ -29,8 +30,18 @@ namespace OrderManagement.Services.CustomerUseCases
         private readonly IUpdateCustomerUseCase _updateCustomer;
         private readonly IUpdateCustomerAddressUseCase _updateCustomerAddress;
         private readonly IUpdateCustomerMailUseCase _updateCustomerMail;
+        private readonly IUpdateCustomerFirstNameUseCase _updateCustomerFirstName;
+        private readonly IUpdateCustomerLastNameUseCase _updateCustomerLastName;
+        private readonly IUpdateCustomerStatusUseCase _updateCustomerStatus;
+        private readonly IDeleteCustomerUseCase _deleteCustomer;
 
-        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers, IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers, IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers, IUpdateCustomerUseCase updateCustomer, IUpdateCustomerAddressUseCase updateCustomerAddress, IUpdateCustomerMailUseCase updateCustomerMail)
+        public CustomerService(ICreateCustomerUseCase createCustomer, IGetAllCustomersUseCase allCustomers,
+            IGetCustomerByIdUseCase customerById, IGetFirstTimeCustomersUseCase firstTimeCustomers,
+            IGetLoyalCustomersUseCase loyalCustomers, IGetNoAccountCustomersUseCase noAccountCustomers,
+            IUpdateCustomerUseCase updateCustomer, IUpdateCustomerAddressUseCase updateCustomerAddress,
+            IUpdateCustomerMailUseCase updateCustomerMail, IUpdateCustomerFirstNameUseCase updateCustomerFirstName,
+            IUpdateCustomerLastNameUseCase updateCustomerLastName, IUpdateCustomerStatusUseCase updateCustomerStatus,
+            IDeleteCustomerUseCase deleteCustomer)
         {
             _createCreateCustomer = createCustomer;
             _getAllCustomers = allCustomers;
@@ -41,7 +52,12 @@ namespace OrderManagement.Services.CustomerUseCases
             _updateCustomer = updateCustomer;
             _updateCustomerAddress = updateCustomerAddress;
             _updateCustomerMail = updateCustomerMail;
+            _updateCustomerFirstName = updateCustomerFirstName;
+            _updateCustomerLastName = updateCustomerLastName;
+            _updateCustomerStatus = updateCustomerStatus;
+            _deleteCustomer = deleteCustomer;
         }
+
         #endregion
 
         #region Use Cases
@@ -69,15 +85,14 @@ namespace OrderManagement.Services.CustomerUseCases
         public async Task<Response<string>> UpdateCustomerMailOn(string customerId, string mail)
             => await _updateCustomerMail.Execute(customerId, mail);
 
-        public Task<Response<string>> UpdateCustomerNameOn(string customerId, string name)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Response<string>> UpdateCustomerFirstNameOn(string customerId, string firstName)
+            => await _updateCustomerFirstName.Execute(customerId, firstName);
 
-        public Task<Response<CustomerStatus>> UpdateCustomerStatusOn(string customerId, CustomerStatus status)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Response<string>> UpdateCustomerLastNameOn(string customerId, string lastName)
+            => await _updateCustomerLastName.Execute(customerId, lastName);
+
+        public async Task<Response<CustomerStatus>> UpdateCustomerStatusOn(string customerId, CustomerStatus status)
+            => await _updateCustomerStatus.Execute(customerId, status);
 
         public async Task<Response<Customer>> UpdateCustomer(Customer customer)
             => await _updateCustomer.Execute(customer);
@@ -87,10 +102,8 @@ namespace OrderManagement.Services.CustomerUseCases
             throw new NotImplementedException();
         }
 
-        public Task<Response<int>> DeleteCustomer(string customerId)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Response<Customer>> DeleteCustomer(string customerId)
+            => await _deleteCustomer.Execute(customerId);
         #endregion
     }
 }

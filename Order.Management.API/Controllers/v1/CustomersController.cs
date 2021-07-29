@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -272,11 +273,11 @@ namespace OrderManagement.API.Controllers.v1
             return Ok(response);
         }
 
-        // PATCH: api/v1/customers/update/name
-        [HttpPatch("update/name")]
-        public async Task<IActionResult> PatchCustomerName(string customerId, string name)
+        // PATCH: api/v1/customers/update/firstName
+        [HttpPatch("update/firstName")]
+        public async Task<IActionResult> PatchCustomerFirstName(string customerId, string firstName)
         {
-            Logger.LogInfo("Attempting to update customer name...");
+            Logger.LogInfo("Attempting to update customer first name...");
 
             if (string.IsNullOrWhiteSpace(customerId))
             {
@@ -284,22 +285,54 @@ namespace OrderManagement.API.Controllers.v1
                 return BadRequest(customerId);
             }
 
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(firstName))
             {
-                Logger.LogError("Invalid customer name");
-                return BadRequest(name);
+                Logger.LogError("Invalid customer first name");
+                return BadRequest(firstName);
             }
 
-            var response = await _customerService.UpdateCustomerNameOn(customerId, name);
+            var response = await _customerService.UpdateCustomerFirstNameOn(customerId, firstName);
 
             if (response.Errors.Any())
             {
-                Logger.LogError("Name not updated");
-                response.Message = "Name not updated. Check the errors and try again.";
+                Logger.LogError("First Name not updated");
+                response.Message = "First Name not updated. Check the errors and try again.";
                 response.Succeeded = false;
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
-            Logger.LogInfo("Name updated successfully!");
+            Logger.LogInfo("First Name updated successfully!");
+
+            return Ok(response);
+        }
+
+        // PATCH: api/v1/customers/update/lastName
+        [HttpPatch("update/lastName")]
+        public async Task<IActionResult> PatchCustomerLastName(string customerId, string lastName)
+        {
+            Logger.LogInfo("Attempting to update customer last name...");
+
+            if (string.IsNullOrWhiteSpace(customerId))
+            {
+                Logger.LogError("Invalid customer id");
+                return BadRequest(customerId);
+            }
+
+            if (string.IsNullOrWhiteSpace(lastName))
+            {
+                Logger.LogError("Invalid customer last name");
+                return BadRequest(lastName);
+            }
+
+            var response = await _customerService.UpdateCustomerLastNameOn(customerId, lastName);
+
+            if (response.Errors.Any())
+            {
+                Logger.LogError("Last Name not updated");
+                response.Message = "Last Name not updated. Check the errors and try again.";
+                response.Succeeded = false;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
+            Logger.LogInfo("Last Name updated successfully!");
 
             return Ok(response);
         }
