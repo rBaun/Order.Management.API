@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using OrderManagement.Application.Services;
+using OrderManagement.Application.UseCases.Products.DELETE;
 using OrderManagement.Application.UseCases.Products.GET;
 using OrderManagement.Application.UseCases.Products.PATCH;
 using OrderManagement.Application.UseCases.Products.POST;
@@ -24,11 +25,13 @@ namespace OrderManagement.Services.ProductUseCases
         private readonly IUpdateProductNameUseCase _updateProductName;
         private readonly IUpdateProductStatusUseCase _updateProductStatus;
         private readonly IUpdateProductUseCase _updateProduct;
+        private readonly IDeleteProductUseCase _deleteProduct;
 
         public ProductService(ICreateProductUseCase product, IGetAllProductsUseCase products,
             IGetProductByIdUseCase productById, IGetTop10ProductsUseCase top10Products,
             IUpdateProductDescriptionUseCase updateProductDescription, IUpdateProductNameUseCase updateProductName,
-            IUpdateProductStatusUseCase updateProductStatus, IUpdateProductUseCase updateProduct)
+            IUpdateProductStatusUseCase updateProductStatus, IUpdateProductUseCase updateProduct,
+            IDeleteProductUseCase deleteProduct)
         {
             _createProduct = product;
             _getProducts = products;
@@ -38,8 +41,8 @@ namespace OrderManagement.Services.ProductUseCases
             _updateProductName = updateProductName;
             _updateProductStatus = updateProductStatus;
             _updateProduct = updateProduct;
+            _deleteProduct = deleteProduct;
         }
-
         #endregion
 
         public async Task<Response<Product>> CreateProduct(Product product)
@@ -63,14 +66,10 @@ namespace OrderManagement.Services.ProductUseCases
         public async Task<Response<string>> UpdateProductName(string productId, string name)
             => await _updateProductName.Execute(productId, name);
 
-        public Task<Response<ProductStatus>> UpdateProductStatusOn(string productId, ProductStatus productStatus)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Response<ProductStatus>> UpdateProductStatusOn(string productId, ProductStatus productStatus)
+            => await _updateProductStatus.Execute(productId, productStatus);
 
-        public Task<Response<int>> DeleteProduct(string productId)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Response<Product>> DeleteProduct(string productId)
+            => await _deleteProduct.Execute(productId);
     }
 }

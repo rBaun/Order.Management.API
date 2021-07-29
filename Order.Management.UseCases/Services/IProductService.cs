@@ -17,6 +17,6 @@ namespace OrderManagement.Application.Services
         Task<Response<string>> UpdateProductDescription(string productId, string description);
         Task<Response<string>> UpdateProductName(string productId, string name);
         Task<Response<ProductStatus>> UpdateProductStatusOn(string productId, ProductStatus productStatus);
-        Task<Response<int>> DeleteProduct(string productId);
+        Task<Response<Product>> DeleteProduct(string productId);
     }
 }
