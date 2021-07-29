@@ -10,5 +10,7 @@ namespace OrderManagement.Services.BusinessLogic.Interfaces
         bool HasRequiredCustomerFields(Customer customer);
         bool HasValidAddress(string address);
         bool HasValidMail(string mail);
+        bool HasValidFirstName(string firstName);
+        bool HasValidLastName(string lastName);
     }
 }

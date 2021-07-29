@@ -55,9 +55,12 @@ namespace OrderManagement.Persistence.Repositories
             return updatedCustomer;
         }
 
-        public Task<Customer> DeleteEntity(string id)
+        public async Task<Customer> DeleteEntity(string id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("_id", ObjectId.Parse(id));
+            var deletedCustomer = await _customerCollection.FindOneAndDeleteAsync(filter);
+
+            return deletedCustomer;
         }
 
         public async Task<List<Customer>> GetFirstTimeCustomers()
@@ -106,14 +109,37 @@ namespace OrderManagement.Persistence.Repositories
             return updatedCustomer.Mail;
         }
 
-        public Task<string> UpdateCustomerName(string customerId, string name)
+        public async Task<string> UpdateCustomerFirstName(string customerId, string firstName)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("_id", ObjectId.Parse(customerId));
+            var update = Builders<Customer>.Update.Set("firstName", firstName);
+            var options = new FindOneAndUpdateOptions<Customer> {ReturnDocument = ReturnDocument.After};
+
+            var updatedCustomer = await _customerCollection.FindOneAndUpdateAsync(filter, update, options);
+
+            return updatedCustomer.FirstName;
         }
 
-        public Task<CustomerStatus> UpdateCustomerStatus(string customerId, CustomerStatus status)
+        public async Task<string> UpdateCustomerLastName(string customerId, string lastName)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq("_id", ObjectId.Parse(customerId));
+            var update = Builders<Customer>.Update.Set("lastName", lastName);
+            var options = new FindOneAndUpdateOptions<Customer> {ReturnDocument = ReturnDocument.After};
+
+            var updatedCustomer = await _customerCollection.FindOneAndUpdateAsync(filter, update, options);
+
+            return updatedCustomer.LastName;
+        }
+
+        public async Task<CustomerStatus> UpdateCustomerStatus(string customerId, CustomerStatus status)
+        {
+            var filter = Builders<Customer>.Filter.Eq("_id", ObjectId.Parse(customerId));
+            var update = Builders<Customer>.Update.Set("customerStatus", status);
+            var options = new FindOneAndUpdateOptions<Customer> {ReturnDocument = ReturnDocument.After};
+
+            var updatedCustomer = await _customerCollection.FindOneAndUpdateAsync(filter, update, options);
+
+            return updatedCustomer.CustomerStatus;
         }
     }
 }
