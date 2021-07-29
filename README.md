@@ -6,6 +6,7 @@
 * Refactor CustomerLogic, ProductLogic and OrderLogic
   * Move as much logic to the domain as possible
   * Remove redundant logic layer, if possible
+  * Include concepts from DDD
 
 
 description coming soon...
