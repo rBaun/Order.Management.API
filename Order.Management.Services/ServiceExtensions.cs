@@ -70,7 +70,7 @@ namespace OrderManagement.Services
             services.AddTransient<IDeactivateCustomerAccountUseCase, DeactivateCustomerAccountUseCase>();
             services.AddTransient<IUpdateCustomerAddressUseCase, UpdateCustomerAddressUseCase>();
             services.AddTransient<IUpdateCustomerMailUseCase, UpdateCustomerMailUseCase>();
-            services.AddTransient<IUpdateCustomerNameUseCase, UpdateCustomerNameUseCase>();
+            services.AddTransient<IUpdateCustomerFirstNameUseCase, UpdateCustomerFirstNameUseCase>();
             services.AddTransient<IUpdateCustomerStatusUseCase, UpdateCustomerStatusUseCase>();
 
             // POST

@@ -31,15 +31,16 @@ namespace OrderManagement.Services.BusinessLogic
 
         public bool HasRequiredCustomerFields(Customer customer)
         {
-            if (customer.FirstName?.Length < 3 || string.IsNullOrWhiteSpace(customer.FirstName) 
-                                              || customer.LastName?.Length < 3 
-                                              || string.IsNullOrWhiteSpace(customer.LastName))
+            if (!HasValidFirstName(customer.FirstName))
+                return false;
+
+            if (!HasValidLastName(customer.LastName))
                 return false;
 
             if (!HasValidAddress(customer.Address))
                 return false;
 
-            if (customer.Mail?.Length < 3 || string.IsNullOrWhiteSpace(customer.Mail))
+            if (!HasValidMail(customer.Mail))
                 return false;
 
             return true;
@@ -67,6 +68,16 @@ namespace OrderManagement.Services.BusinessLogic
             {
                 return false;
             }
+        }
+
+        public bool HasValidFirstName(string firstName)
+        {
+            return firstName.Length >= 2 || string.IsNullOrWhiteSpace(firstName);
+        }
+
+        public bool HasValidLastName(string lastName)
+        {
+            return lastName.Length >= 2 || string.IsNullOrWhiteSpace(lastName);
         }
     }
 }
