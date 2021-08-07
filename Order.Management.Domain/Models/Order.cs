@@ -11,7 +11,7 @@ namespace OrderManagement.Domain.Models
             OrderLines = new List<OrderLine>();
         }
 
-        public int OrderId { get; set; }
+        public string OrderId { get; set; }
 
         public DateTime PlacedOn { get; set; }
         public DateTime ProcessedOn { get; set; }
